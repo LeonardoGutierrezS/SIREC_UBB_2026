@@ -8,6 +8,7 @@ import Error404 from '@pages/Error404';
 import Root from '@pages/Root';
 import ProtectedRoute from '@components/ProtectedRoute';
 import '@styles/styles.css';
+import Equipos from '@pages/Equipos';
 
 const router = createBrowserRouter([
   {
@@ -26,7 +27,15 @@ const router = createBrowserRouter([
           <Users />
         </ProtectedRoute>
         ),
-    }
+    },
+    {
+        path: '/equipos', 
+        element: (
+          <ProtectedRoute allowedRoles={['administrador']}>
+            <Equipos />
+          </ProtectedRoute>
+        ),
+      }
     ]
   },
   {

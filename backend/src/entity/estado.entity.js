@@ -11,11 +11,11 @@ columns: {
     generated: true,
     },
     Nombre: {
-    type: "enum",
-    enum: ["Disponible", "Prestado", "No disponible"],
-    default: "Disponible",
+    type: "varchar",
+    length: 100,
     nullable: false,
-    }
+    unique: true,
+    },
 },
 indices: [
     {

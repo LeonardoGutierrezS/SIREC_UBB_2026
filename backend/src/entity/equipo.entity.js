@@ -58,3 +58,4 @@ relations: {
     },
 },
 });
+export default EquipoSchema;
