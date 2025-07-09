@@ -1,18 +1,36 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 @import url("animations.css");
+
+/* Variables globales */
+:root {
+  --primary-blue: #2563eb;
+  --gray-50: #f8fafc;
+  --gray-900: #0f172a;
+}
+
 html,
 body {
-	margin: 0;
-	display: flex;
-	flex-direction: column;
-	place-items: center;
-	min-width: 100%;
-	min-height: 100vh;
-	overflow-x: hidden;
-	font-family: "Montserrat", sans-serif;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    place-items: center;
+    min-width: 100%;
+    min-height: 100vh;
+    overflow-x: hidden;
+    font-family: "Inter", sans-serif;
+    background: var(--gray-50);
+    color: var(--gray-900);
 }
+
 #root {
-	min-width: 100%;
-	min-height: 100vh;
-	margin: 0 auto;
+    min-width: 100%;
+    min-height: 100vh;
+    margin: 0 auto;
+}
+
+/* Ajuste para el sidebar en desktop */
+@media (min-width: 1024px) {
+  body {
+    padding-left: 280px;
+  }
 }

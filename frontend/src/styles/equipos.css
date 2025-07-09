@@ -1,61 +1,42 @@
-/* Popup styles for EquipoForm */
-.popup-backdrop {
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.3);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
+/* Variables de color */
+:root {
+  --primary-blue: #2563eb;
+  --primary-blue-dark: #1d4ed8;
+  --gray-50: #f8fafc;
+  --gray-100: #f1f5f9;
+  --gray-200: #e2e8f0;
+  --gray-600: #475569;
+  --gray-700: #334155;
+  --gray-800: #1e293b;
+  --gray-900: #0f172a;
+  --success-green: #10b981;
+  --success-green-dark: #059669;
+  --warning-orange: #f59e0b;
+  --danger-red: #ef4444;
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
 }
 
-.popup-form {
-  background: #fff;
-  padding: 32px 24px;
-  border-radius: 10px;
-  box-shadow: 0 2px 16px rgba(0,0,0,0.15);
-  min-width: 320px;
-  max-width: 90vw;
-}
-
-.popup-form h2 {
-  margin-bottom: 18px;
-}
-
-.popup-form form {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.popup-form input {
-  padding: 8px;
-  border-radius: 5px;
-  border: 1px solid #bfc9d1;
-}
-
-.form-actions {
-  display: flex;
-  gap: 10px;
-  justify-content: flex-end;
-  margin-top: 10px;
-}
-
-
-
-
+/* Layout principal */
 .main-container {
   padding: 32px;
-  background: #f7f9fa;
-  min-height: 100vh;
+  background: var(--gray-50);
+  min-height: calc(100vh - 70px);
+  margin-top: 70px;
+  margin-left: 0;
+}
+
+@media (min-width: 1024px) {
+  .main-container {
+    margin-left: 280px;
+  }
 }
 
 .table-container {
-  background: #fff;
+  background: white;
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  box-shadow: var(--shadow-md);
   padding: 24px;
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
 }
 
@@ -63,84 +44,193 @@
   font-size: 2rem;
   font-weight: 700;
   margin-bottom: 24px;
-  color: #22223b;
+  color: var(--gray-900);
 }
 
 .top-table {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px;
+  margin-bottom: 24px;
+  gap: 16px;
 }
 
 .filter-actions {
   display: flex;
   gap: 12px;
   align-items: center;
+  flex-wrap: wrap;
 }
 
+/* Botones mejorados */
 button {
-  background: #969899;
-  color: #1a237e;
+  background: var(--gray-200);
+  color: var(--gray-700);
   border: none;
-  border-radius: 6px;
-  padding: 8px 16px;
+  border-radius: 8px;
+  padding: 10px 16px;
   cursor: pointer;
   font-weight: 500;
-  transition: background 0.2s;
+  font-size: 0.875rem;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+button:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
 }
 
 button:disabled {
-  background: #bfc9d1;
+  background: var(--gray-100);
+  color: var(--gray-600);
   cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
 
-.delete-equipo-button {
-  background: #ff4f4f;
-}
-
-.delete-equipo-button:disabled {
-  background: #f5bcbc;
-}
-
-/* Botones PDF */
+/* Botones específicos */
 .pdf-preview-button {
-  background: #4CAF50 !important;
+  background: var(--success-green) !important;
   color: white !important;
 }
 
 .pdf-preview-button:hover {
-  background: #45a049 !important;
+  background: var(--success-green-dark) !important;
 }
 
 .pdf-download-button {
-  background: #2196F3 !important;
+  background: var(--primary-blue) !important;
   color: white !important;
 }
 
 .pdf-download-button:hover {
-  background: #1976D2 !important;
+  background: var(--primary-blue-dark) !important;
 }
 
 .new-equipo-button {
-  background: #f0f0f0 !important;
-  color: #1a237e !important;
+  background: var(--warning-orange) !important;
+  color: white !important;
+  font-weight: 600;
 }
 
 .new-equipo-button:hover {
-  background: #e0e0e0 !important;
+  background: #d97706 !important;
 }
 
-@media (max-width: 800px) {
+.delete-equipo-button {
+  background: var(--danger-red) !important;
+  color: white !important;
+}
+
+.delete-equipo-button:hover {
+  background: #dc2626 !important;
+}
+
+.delete-equipo-button:disabled {
+  background: #fca5a5 !important;
+}
+
+/* Popup mejorado */
+.popup-backdrop {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+}
+
+.popup-form {
+  background: white;
+  padding: 32px;
+  border-radius: 16px;
+  box-shadow: var(--shadow-md);
+  min-width: 400px;
+  max-width: 90vw;
+  border: 1px solid var(--gray-200);
+}
+
+.popup-form h2 {
+  margin-bottom: 24px;
+  color: var(--gray-900);
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.popup-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.popup-form label {
+  font-weight: 500;
+  color: var(--gray-700);
+  margin-bottom: 4px;
+  font-size: 0.875rem;
+}
+
+.popup-form input,
+.popup-form select {
+  padding: 12px;
+  border-radius: 8px;
+  border: 2px solid var(--gray-200);
+  font-size: 0.875rem;
+  transition: border-color 0.2s;
+}
+
+.popup-form input:focus,
+.popup-form select:focus {
+  outline: none;
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.form-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 24px;
+}
+
+.form-actions button {
+  min-width: 100px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .main-container {
+    padding: 16px;
+    margin-left: 0;
+  }
+  
   .table-container {
-    padding: 12px;
+    padding: 16px;
   }
+  
   .title-table {
-    font-size: 1.3rem;
+    font-size: 1.5rem;
+    margin-bottom: 16px;
   }
+  
   .top-table {
     flex-direction: column;
-    gap: 10px;
-    align-items: flex-start;
+    align-items: stretch;
+    gap: 12px;
+  }
+  
+  .filter-actions {
+    justify-content: center;
+  }
+  
+  .popup-form {
+    min-width: auto;
+    width: 90vw;
+    padding: 24px;
   }
 }
