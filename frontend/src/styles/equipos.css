@@ -103,6 +103,34 @@ button:disabled {
   background: #f5bcbc;
 }
 
+/* Botones PDF */
+.pdf-preview-button {
+  background: #4CAF50 !important;
+  color: white !important;
+}
+
+.pdf-preview-button:hover {
+  background: #45a049 !important;
+}
+
+.pdf-download-button {
+  background: #2196F3 !important;
+  color: white !important;
+}
+
+.pdf-download-button:hover {
+  background: #1976D2 !important;
+}
+
+.new-equipo-button {
+  background: #f0f0f0 !important;
+  color: #1a237e !important;
+}
+
+.new-equipo-button:hover {
+  background: #e0e0e0 !important;
+}
+
 @media (max-width: 800px) {
   .table-container {
     padding: 12px;
