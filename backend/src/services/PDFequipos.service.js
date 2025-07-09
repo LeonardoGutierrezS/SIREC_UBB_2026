@@ -2,7 +2,7 @@ import PDFDocument from "pdfkit";
 import { findAllEquipos } from "./equipo.service.js";
 
 export const generateEquiposPDF = async () => {
-  try {
+try {
     const equipos = await findAllEquipos();
     
     const doc = new PDFDocument({ margin: 50 });
@@ -20,12 +20,12 @@ export const generateEquiposPDF = async () => {
     
     // Definir columnas
     const columns = {
-      id: { x: 50, width: 50 },
-      modelo: { x: 100, width: 120 },
-      tipo: { x: 220, width: 80 },
-      estado: { x: 300, width: 80 },
-      condicion: { x: 380, width: 80 },
-      propietario: { x: 460, width: 100 }
+    id: { x: 50, width: 50 },
+    modelo: { x: 100, width: 120 },
+    tipo: { x: 220, width: 80 },
+    estado: { x: 300, width: 80 },
+    condicion: { x: 380, width: 80 },
+    propietario: { x: 460, width: 100 }
     };
     
     // Encabezados
