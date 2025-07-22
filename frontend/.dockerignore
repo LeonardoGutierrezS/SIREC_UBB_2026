@@ -1,0 +1,14 @@
+# Ignorar node_modules
+node_modules
+
+# Ignorar archivos de build
+dist
+
+npm-debug.log
+.git
+.gitignore
+README.md
+.env
+.env.local
+.env.production
+*.log
