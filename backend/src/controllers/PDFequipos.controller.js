@@ -6,17 +6,17 @@ export const downloadEquiposPDF = async (req, res) => {
     const { doc, title } = await generateEquiposPDF();
     
     // Configurar headers para descarga
-    const filename = `${title.replace(/\s+/g, '_')}.pdf`;
+    const filename = `${title.replace(/\s+/g, "_")}.pdf`;
     
-    res.setHeader('Content-Type', 'application/pdf');
-    res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+    res.setHeader("Content-Type", "application/pdf");
+    res.setHeader("Content-Disposition", `attachment; filename="${filename}"`);
     
     // Pipe del documento al response
     doc.pipe(res);
     doc.end();
     
   } catch (error) {
-    console.error('Error generando PDF:', error);
+    console.error("Error generando PDF:", error);
     handleErrorServer(res, 500, "Error interno del servidor al generar PDF");
   }
 };
@@ -26,15 +26,15 @@ export const previewEquiposPDF = async (req, res) => {
     const { doc, title } = await generateEquiposPDF();
     
     // Configurar headers para vista previa
-    res.setHeader('Content-Type', 'application/pdf');
-    res.setHeader('Content-Disposition', 'inline');
+    res.setHeader("Content-Type", "application/pdf");
+    res.setHeader("Content-Disposition", "inline");
     
     // Pipe del documento al response
     doc.pipe(res);
     doc.end();
     
   } catch (error) {
-    console.error('Error generando PDF:', error);
+    console.error("Error generando PDF:", error);
     handleErrorServer(res, 500, "Error interno del servidor al generar PDF");
   }
 };
