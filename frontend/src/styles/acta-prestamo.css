@@ -1,0 +1,381 @@
+/* Estilos para el Acta de Préstamo */
+.acta-container {
+    padding: 20px;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    color: #333;
+    line-height: 1.5;
+    background-color: white;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Mostrar el acta en pantalla con un estilo de preview */
+.acta-container.print-only {
+    display: block;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border: 1px solid #ddd;
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+
+@media print {
+    /* Ocultar todo por defecto */
+    body * {
+        visibility: hidden;
+    }
+    
+    /* Mostrar solo el acta y su contenido */
+    .modal-overlay,
+    .modal-overlay *,
+    .acta-container.print-only, 
+    .acta-container.print-only * {
+        visibility: visible;
+    }
+
+    /* Forzar ocultación de scrollbars en todos los niveles */
+    html, body, #root, .modal-overlay, .modal-view-body, .acta-container {
+        overflow: visible !important;
+        height: auto !important;
+        max-height: none !important;
+    }
+
+    /* Deshabilitar elementos que no deben imprimirse */
+    .no-print, 
+    .acta-controls,
+    .swal2-container, 
+    .upload-modal-overlay {
+        display: none !important;
+    }
+    
+    /* Ajustar posicionamiento para impresión */
+    .modal-overlay {
+        position: absolute !important;
+        left: 0 !important;
+        top: 0 !important;
+        width: 100% !important;
+        height: auto !important;
+        background: none !important;
+        padding: 0 !important;
+        display: block !important;
+    }
+
+    .modal-content-wrapper {
+        box-shadow: none !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        border: none !important;
+    }
+
+    .acta-container.print-only {
+        width: 19cm !important; /* Ancho seguro para A4/Letter */
+        max-width: 19cm !important;
+        margin: 0 auto !important;
+        padding: 0.5cm !important;
+        border: none !important;
+        box-shadow: none !important;
+    }
+
+    @page {
+        margin: 1cm;
+        size: auto;
+    }
+}
+
+/* Panel de control superior */
+.acta-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f8f9fa;
+    padding: 12px 20px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    border: 1px solid #eee;
+}
+
+.control-info {
+    font-size: 0.9em;
+    color: #666;
+    font-weight: 500;
+}
+
+.control-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-print-acta {
+    padding: 8px 18px;
+    background-color: #006edf;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-print-acta:hover {
+    background-color: #0056b3;
+    transform: translateY(-1px);
+}
+
+.btn-close-acta {
+    padding: 8px 18px;
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-close-acta:hover {
+    background-color: #5a6268;
+}
+
+.acta-header-new {
+    margin-bottom: 35px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.logos-top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.logo-top-left, .logo-top-right {
+    height: 85px;
+    width: auto;
+    object-fit: contain;
+}
+
+.title-block {
+    text-align: center;
+    width: 100%;
+}
+
+.title-block h1 {
+    margin: 0;
+    color: #003366;
+    font-size: 1.8em;
+    font-weight: 800;
+    line-height: 1.1;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.title-block .subtitle {
+    margin: 10px 0 0 0;
+    font-size: 1.05em;
+    color: #444;
+    font-weight: 600;
+}
+
+.title-divider {
+    height: 4px;
+    background: #006edf;
+    width: 250px;
+    margin: 15px auto 0;
+    border-radius: 2px;
+}
+
+.acta-meta {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    background-color: #f8f9fa;
+    padding: 12px 20px;
+    border-radius: 6px;
+    border: 1px solid #f1f1f1;
+}
+
+.meta-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.meta-label {
+    font-size: 0.75em;
+    font-weight: 700;
+    color: #888;
+    letter-spacing: 0.5px;
+}
+
+.meta-value {
+    font-size: 1em;
+    font-weight: 600;
+    color: #333;
+}
+
+.acta-body {
+    font-size: 0.95em;
+}
+
+.acta-intro {
+    margin-bottom: 25px;
+    text-align: justify;
+}
+
+.acta-section {
+    margin-bottom: 25px;
+}
+
+.acta-section h3 {
+    font-size: 1em;
+    color: #003366;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}
+
+.acta-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 10px;
+}
+
+.acta-table td {
+    padding: 8px;
+    border: 1px solid #eee;
+    vertical-align: top;
+}
+
+.acta-table td:nth-child(odd) {
+    background-color: #fafafa;
+    width: 20%;
+}
+
+.specs-box {
+    background-color: #f0f7ff;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 0.9em;
+}
+
+.specs-box ul {
+    margin: 5px 0;
+    padding-left: 20px;
+}
+
+.obligaciones-box {
+    margin-top: 15px;
+    background-color: #fffdec;
+    padding: 15px;
+    border: 1px solid #f9f0a0;
+    border-radius: 5px;
+    font-size: 0.85em;
+    text-align: justify;
+}
+
+.obligaciones-box ol {
+    margin: 10px 0 0 20px;
+}
+
+.firmas-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-top: 60px;
+    text-align: center;
+}
+
+.firma-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.firma-line {
+    width: 100%;
+    border-top: 1px solid #333;
+    margin-bottom: 10px;
+}
+
+.firma-box p {
+    margin: 2px 0;
+    font-size: 0.8em;
+}
+
+.acta-footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+    text-align: center;
+    font-size: 0.75em;
+    color: #999;
+}
+
+/* ============================================
+   ESTILOS PARA VISUALIZACIÓN EN MODAL
+   ============================================ */
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.75);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Permite que el contenido empiece arriba y escrollee */
+    z-index: 3000;
+    overflow-y: auto; /* Habilita el scroll en el overlay */
+    padding: 30px 20px;
+    backdrop-filter: blur(4px);
+}
+
+.modal-content-wrapper {
+    background: white;
+    width: 100%;
+    max-width: 900px;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 30px; /* Margen al final para que no pegue abajo */
+}
+
+.modal-close-header {
+    background: #f8f9fa;
+    padding: 12px 20px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: flex-end;
+    border-radius: 12px 12px 0 0;
+}
+
+.btn-close-modal {
+    padding: 8px 20px;
+    background-color: #555;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+
+.btn-close-modal:hover {
+    background-color: #333;
+}
+
+.modal-view-body {
+    padding: 0; /* Ya que el acta-container tiene su propio padding */
+    overflow: visible;
+}
+
+/* Ajustes adicionales para que el acta se vea bien en el modal */
+.modal-view-body .acta-container {
+    box-shadow: none;
+    border: none;
+    margin: 0 auto;
+}

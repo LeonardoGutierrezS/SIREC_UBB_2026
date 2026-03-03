@@ -7,7 +7,7 @@ function Search({ value, onChange, placeholder }) {
                 type="text"
                 className='search-input-table'
                 value={value}
-                onChange={onChange}
+                onChange={(e) => onChange(e.target.value)}
                 placeholder={placeholder}
             />
         </div>

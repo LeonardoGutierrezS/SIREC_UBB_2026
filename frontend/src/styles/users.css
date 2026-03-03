@@ -1,14 +1,13 @@
-.main-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    width: 100%;
+.users-main-container {
+    margin-left: 280px;
+    padding: 40px;
+    min-height: 100vh;
+    width: calc(100% - 280px);
+    box-sizing: border-box;
 }
 
 .table-container {
-    width: 90%;
+    width: 100%;
     max-width: 1400px;
     margin: 0 auto;
 }
@@ -18,11 +17,15 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    margin-bottom: 20px;
 }
 
 .title-table {
     color: #003366;
-    margin-left: 70px;
+    font-size: 2em;
+    margin: 0;
+    border-bottom: 3px solid #006edf;
+    padding-bottom: 10px;
 }
 
 .filter-actions {
@@ -38,10 +41,16 @@
 }
 
 .delete-user-button {
-    margin-right: 70px;
+    margin-right: 0;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 1024px) {
+    .users-main-container {
+        margin-left: 0;
+        width: 100%;
+        padding: 80px 20px 20px 20px;
+    }
+
     .title-table {
         margin: 0;
     }
@@ -49,6 +58,7 @@
         display: flex;
         flex-direction: column;
         gap: 10px;
+        align-items: flex-start;
     }
 
     .delete-user-button {
@@ -57,14 +67,19 @@
 
     .filter-actions {
         margin-bottom: 10px;
+        width: 100%;
     }
+}
+
+@media (max-width: 767px) {
     .table-container {
         margin: 0;
-        width: 352px;
-        height: 500px;
+        width: 100%;
+        height: auto;
     }
     .popup {
-        width: 350px;
+        width: 90%;
+        max-width: 350px;
         height: 600px;
     }
     .popup .form {
@@ -77,15 +92,5 @@
 
     .popup .options-class {
         width: 10px;
-    }
-}
-
-@media (min-width: 768px) and (max-width: 1024px) {
-    .title-table {
-        margin-left: 35px;
-    }
-
-    .delete-user-button {
-        margin-right: 35px;
     }
 }

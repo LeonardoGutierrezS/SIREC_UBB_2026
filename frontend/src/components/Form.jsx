@@ -1,13 +1,26 @@
 import { useForm } from 'react-hook-form';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import '@styles/form.css';
 import HideIcon from '../assets/HideIcon.svg';
 import ViewIcon from '../assets/ViewIcon.svg';
 
 const Form = ({ title, fields, buttonText, onSubmit, footerContent, backgroundColor }) => {
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const [showPassword, setShowPassword] = useState(false);
     const [showNewPassword, setShowNewPassword] = useState(false);
+
+    // Establecer valores por defecto cuando los fields cambien
+    useEffect(() => {
+        const defaultValues = {};
+        fields.forEach(field => {
+            if (field.defaultValue !== undefined && field.defaultValue !== '') {
+                defaultValues[field.name] = field.defaultValue;
+            }
+        });
+        if (Object.keys(defaultValues).length > 0) {
+            reset(defaultValues);
+        }
+    }, [fields, reset]);
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
@@ -74,7 +87,6 @@ const Form = ({ title, fields, buttonText, onSubmit, footerContent, backgroundCo
                                 validate: field.validate || {},
                             })}
                             name={field.name}
-                            defaultValue={field.defaultValue || ''}
                             disabled={field.disabled}
                             onChange={field.onChange}
                         >

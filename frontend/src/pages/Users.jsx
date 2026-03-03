@@ -26,8 +26,8 @@ const Users = () => {
 
   const { handleDelete } = useDeleteUser(fetchUsers, setDataUser);
 
-  const handleRutFilterChange = (e) => {
-    setFilterRut(e.target.value);
+  const handleRutFilterChange = (value) => {
+    setFilterRut(value);
   };
 
   const handleSelectionChange = useCallback((selectedUsers) => {
@@ -38,12 +38,29 @@ const Users = () => {
     { title: "Nombre", field: "nombreCompleto", width: 350, responsive: 0 },
     { title: "Correo electrónico", field: "email", width: 300, responsive: 3 },
     { title: "Rut", field: "rut", width: 150, responsive: 2 },
-    { title: "Rol", field: "rol", width: 200, responsive: 2 },
+    { title: "Tipo de Usuario", field: "tipoUsuario", width: 200, responsive: 2 },
+    { 
+      title: "Carrera/Cargo", 
+      field: "carreraOCargo", 
+      width: 300, 
+      responsive: 2,
+      formatter: function(cell) {
+        const rowData = cell.getRow().getData();
+        const tipoDesc = rowData.tipoUsuario?.toLowerCase();
+        // Mostrar carrera para Alumnos, cargo para Profesores
+        if (tipoDesc === 'alumno') {
+          return rowData.carrera || 'Sin carrera';
+        } else if (tipoDesc === 'profesor') {
+          return rowData.cargo || 'Sin cargo';
+        }
+        return '-';
+      }
+    },
     { title: "Creado", field: "createdAt", width: 200, responsive: 2 }
   ];
 
   return (
-    <div className='main-container'>
+    <div className='users-main-container'>
       <div className='table-container'>
         <div className='top-table'>
           <h1 className='title-table'>Usuarios</h1>

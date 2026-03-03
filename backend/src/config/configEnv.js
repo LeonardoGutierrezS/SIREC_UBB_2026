@@ -18,3 +18,12 @@ export const PASSWORD = process.env.PASSWORD;
 export const DATABASE = process.env.DATABASE;
 export const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET;
 export const cookieKey = process.env.cookieKey;
+export const FRONTEND_URL = process.env.FRONTEND_URL;
+
+export const SUPPORT_EMAIL = process.env.SUPPORT_EMAIL || "labespecialidades.face@ubiobio.cl";
+
+export const emailConfig = {
+    service:"gmail",
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+};

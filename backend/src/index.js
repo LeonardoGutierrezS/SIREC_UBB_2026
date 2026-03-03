@@ -8,8 +8,22 @@ import passport from "passport";
 import express, { json, urlencoded } from "express";
 import { cookieKey, HOST, PORT } from "./config/configEnv.js";
 import { connectDB } from "./config/configDb.js";
-import { createUsers } from "./config/initialSetup.js";
+import {
+  
+  createCargos,
+  createCarreras,
+  createCategorias,
+  createEquipos,
+  createEstados,
+  createEstadosPrestamo,
+  createMarcas,
+  createPenalizaciones,
+  createTiposUsuario,
+  createUsers,
+
+} from "./config/initialSetup.js";
 import { passportJwtSetup } from "./auth/passport.auth.js";
+import { startCronJobs } from "./services/tareasProgramadas.service.js";
 
 async function setupServer() {
   try {
@@ -40,6 +54,9 @@ async function setupServer() {
     app.use(cookieParser());
 
     app.use(morgan("dev"));
+
+    // Servir archivos estáticos (logos para emails)
+    app.use('/public', express.static('public'));
 
     app.use(
       session({
@@ -73,7 +90,17 @@ async function setupAPI() {
   try {
     await connectDB();
     await setupServer();
+    await createTiposUsuario();
+    await createCarreras();
+    await createMarcas();
+    await createCategorias();
+    await createEstados();
+    await createEstadosPrestamo();
+    await createCargos();
     await createUsers();
+    await createEquipos();
+    await createPenalizaciones();
+    startCronJobs();
   } catch (error) {
     console.log("Error en index.js -> setupAPI(), el error es: ", error);
   }

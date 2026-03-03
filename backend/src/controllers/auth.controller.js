@@ -13,10 +13,12 @@ import {
 export async function login(req, res) {
   try {
     const { body } = req;
+    console.log("Body recibido:", body);
 
     const { error } = authValidation.validate(body);
 
     if (error) {
+      console.log("Error de validación:", error.details);
       return handleErrorClient(res, 400, "Error de validación", error.message);
     }
     const [accessToken, errorToken] = await loginService(body);

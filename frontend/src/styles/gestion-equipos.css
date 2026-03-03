@@ -1,0 +1,574 @@
+/* Gestión de Equipos - Estilos */
+
+.equipos-header {
+  margin-bottom: 20px;
+}
+
+.equipos-header h1 {
+  color: #003366;
+  font-size: 1.75em;
+  margin: 0;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #006edf;
+}
+
+/* Section Header */
+.section-header-with-button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.section-header-with-button h2 {
+  color: #003366;
+  font-size: 1.5em;
+  margin: 0;
+}
+
+.count-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #006edf 0%, #003366 100%);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(0, 110, 223, 0.3);
+  min-width: 40px;
+}
+
+/* Tabs */
+.tabs-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.tab-button {
+    padding: 12px 30px;
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    color: #666;
+    font-size: 1em;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.tab-button:hover {
+    color: #003366;
+    background-color: rgba(0, 51, 102, 0.05);
+}
+
+.tab-button.active {
+    color: #003366;
+    border-bottom-color: #006edf;
+    font-weight: 600;
+}
+
+/* Tab Content */
+.tab-content {
+    margin-top: 20px;
+}
+
+/* Botón Crear Equipo */
+.btn-create {
+    background: linear-gradient(135deg, #006edf 0%, #003366 100%);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    font-size: 0.95em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 110, 223, 0.3);
+}
+
+.btn-create:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 110, 223, 0.4);
+}
+
+.btn-create:active {
+    transform: translateY(0);
+}
+
+/* Equipos Section (Contenedor Principal como en Usuarios) */
+.equipos-section {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Filtros */
+.filters-container {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.filter-input, .filter-select {
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 0.95em;
+    transition: all 0.3s ease;
+}
+
+.filter-input:focus, .filter-select:focus {
+    outline: none;
+    border-color: #006edf;
+    box-shadow: 0 0 0 3px rgba(0, 110, 223, 0.1);
+}
+
+/* Tabla de equipos */
+.equipos-table-container {
+    /* Ya no necesita fondo ni sombra si está dentro de .equipos-section */
+    background: transparent;
+    box-shadow: none;
+    overflow-x: auto;
+}
+
+.equipos-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.equipos-table thead {
+    background-color: #003366;
+    color: white;
+}
+
+.equipos-table th {
+    padding: 15px;
+    text-align: left;
+    font-weight: 600;
+}
+
+.equipos-table th.text-center,
+.equipos-table td.text-center {
+    text-align: center;
+}
+
+.equipos-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.equipos-table tbody tr:hover {
+    background-color: #f5f5f5;
+}
+
+.equipos-table .no-data {
+    text-align: center;
+    padding: 40px;
+    color: #999;
+    font-style: italic;
+}
+
+/* Celdas especiales */
+.comentarios-cell {
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Badge de disponibilidad */
+.disponible-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 0.85em;
+    font-weight: 600;
+}
+
+.disponible-badge.disponible {
+    background-color: #4caf50;
+    color: white;
+}
+
+.disponible-badge.no-disponible {
+    background-color: #f44336;
+    color: white;
+}
+
+/* Botones de acción */
+.actions-buttons {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}
+
+.btn-edit,
+.btn-delete {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: none;
+}
+
+.btn-edit {
+    color: #2196f3;
+}
+
+.btn-edit:hover {
+    background-color: #e3f2fd;
+    transform: translateY(-2px);
+}
+
+.btn-delete {
+    color: #f44336;
+}
+
+.btn-delete:hover {
+    background-color: #ffebee;
+    transform: translateY(-2px);
+}
+
+/* Mensajes */
+.loading-message {
+    text-align: center;
+    padding: 40px;
+    color: #666;
+    font-size: 1.1em;
+}
+
+.error-message {
+    text-align: center;
+    padding: 40px;
+    color: #f44336;
+    font-size: 1.1em;
+}
+
+/* Tablas de catálogos (marcas, categorías, estados) */
+.catalog-table-container {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.catalog-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.catalog-table thead {
+  background: linear-gradient(135deg, #006edf 0%, #003366 100%);
+}
+
+.catalog-table th {
+  padding: 16px 20px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: white;
+}
+
+.catalog-table th:first-child {
+  width: 100px;
+  text-align: center;
+}
+
+.catalog-table th:last-child {
+  width: 150px;
+  text-align: center;
+}
+
+.catalog-table tbody tr {
+  border-bottom: 1px solid #f0f0f0;
+  transition: all 0.2s ease;
+}
+
+.catalog-table tbody tr:hover {
+  background: linear-gradient(90deg, #f8f9fa 0%, #ffffff 100%);
+  transform: translateX(5px);
+  box-shadow: -5px 0 0 0 #006edf;
+}
+
+.catalog-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.catalog-table td {
+  padding: 18px 20px;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.catalog-table td:first-child {
+  text-align: center;
+  font-weight: 700;
+  color: #006edf;
+  font-size: 0.9rem;
+  background: #f8f9fa;
+  border-right: 2px solid #e0e0e0;
+}
+
+.catalog-table td:nth-child(2) {
+  font-weight: 500;
+  font-size: 1rem;
+  color: #1a1a1a;
+}
+
+.catalog-table td:last-child {
+  text-align: center;
+}
+
+.catalog-table .no-data {
+  text-align: center;
+  padding: 3rem;
+  color: #999;
+  font-style: italic;
+  font-size: 1rem;
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+}
+
+/* Badge de ID en catálogos */
+.catalog-id-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  background: linear-gradient(135deg, #006edf 0%, #003366 100%);
+  color: white;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(0, 110, 223, 0.3);
+}
+
+/* Nombre destacado */
+.catalog-name {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Estilos específicos para marcas */
+.id-badge {
+  display: inline-block;
+  padding: 6px 14px;
+  background: linear-gradient(135deg, #006edf 0%, #003366 100%);
+  color: white;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  box-shadow: 0 2px 6px rgba(0, 110, 223, 0.3);
+  min-width: 45px;
+  text-align: center;
+}
+
+.marca-name {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.marca-icon {
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.marca-text {
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: #1a1a1a;
+}
+
+/* Estilos específicos para categorías */
+.categoria-name {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.categoria-icon {
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.categoria-text {
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: #1a1a1a;
+}
+
+/* Estilos específicos para estados */
+.estado-name {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.estado-icon {
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.estado-text {
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: #1a1a1a;
+}
+
+.btn-details {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.1em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: none;
+  color: #2196f3;
+}
+
+.btn-details:hover {
+  background-color: #e3f2fd;
+  transform: translateY(-2px);
+}
+
+.catalog-name-icon {
+  font-size: 1.3rem;
+  opacity: 0.7;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .tabs-container {
+        flex-direction: column;
+    }
+
+    .tab-button {
+        width: 100%;
+        text-align: left;
+    }
+
+    .section-header-with-button {
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
+    }
+
+    .btn-create {
+        width: 100%;
+    }
+
+    .filters-row {
+        flex-direction: column;
+    }
+
+    .filter-select {
+        width: 100%;
+    }
+
+    .equipos-table-container {
+        overflow-x: auto;
+    }
+
+    .equipos-table {
+        font-size: 0.85em;
+    }
+
+    .equipos-table th,
+    .equipos-table td {
+        padding: 8px;
+    }
+
+    .actions-buttons {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .catalog-table th,
+    .catalog-table td {
+        padding: 12px 10px;
+    }
+
+    .catalog-name {
+        flex-direction: column;
+        gap: 5px;
+        align-items: flex-start;
+    }
+
+    .catalog-name-icon {
+        font-size: 1.1rem;
+    }
+
+    .count-badge {
+        font-size: 0.8rem;
+        padding: 3px 10px;
+    }
+}
+
+/* Estilos de Paginación */
+.pagination-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    gap: 15px;
+}
+
+.pagination-btn {
+    padding: 8px 16px;
+    border: 1px solid #006edf;
+    background-color: white;
+    color: #006edf;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.pagination-btn:hover:not(:disabled) {
+    background-color: #006edf;
+    color: white;
+}
+
+.pagination-btn:disabled {
+    border-color: #ccc;
+    color: #ccc;
+    cursor: not-allowed;
+}
+
+.pagination-info {
+    font-weight: 500;
+    color: #666;
+}
+

@@ -7,15 +7,9 @@ const useUsers = () => {
     const fetchUsers = async () => {
         try {
             const response = await getUsers();
-            const formattedData = response.map(user => ({
-                nombreCompleto: user.nombreCompleto,
-                rut: user.rut,
-                email: user.email,
-                rol: user.rol,
-                createdAt: user.createdAt
-            }));
-            dataLogged(formattedData);
-            setUsers(formattedData);
+            // Los datos ya vienen formateados del servicio
+            dataLogged(response);
+            setUsers(response);
         } catch (error) {
             console.error("Error: ", error);
         }
@@ -25,14 +19,12 @@ const useUsers = () => {
         fetchUsers();
     }, []);
 
-    const dataLogged = (formattedData) => {
+    const dataLogged = (users) => {
         try {
             const { rut } = JSON.parse(sessionStorage.getItem('usuario'));
-            for(let i = 0; i < formattedData.length ; i++) {
-                if(formattedData[i].rut === rut) {
-                    formattedData.splice(i, 1);
-                    break;
-                }
+            const userIndex = users.findIndex(user => user.rut === rut);
+            if(userIndex !== -1) {
+                users.splice(userIndex, 1);
             }
         } catch (error) {
             console.error("Error: ", error)

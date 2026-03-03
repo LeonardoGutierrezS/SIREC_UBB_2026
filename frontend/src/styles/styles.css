@@ -16,3 +16,35 @@ body {
 	min-height: 100vh;
 	margin: 0 auto;
 }
+
+/* Contenedor principal con margen para el sidebar */
+.main-container {
+	margin-left: 280px;
+	padding: 40px;
+	min-height: 100vh;
+	width: calc(100% - 280px);
+	box-sizing: border-box;
+}
+
+.main-container h1 {
+	color: #003366;
+	font-size: 1.75em;
+	margin-top: 0;
+	margin-bottom: 20px;
+	border-bottom: 2px solid #006edf;
+	padding-bottom: 8px;
+}
+
+/* Responsive para el contenedor principal */
+@media (max-width: 1024px) {
+	.main-container {
+		margin-left: 0;
+		width: 100%;
+		padding: 80px 20px 20px 20px;
+	}
+}
+
+/* Forzar prioridad de SweetAlert2 */
+.swal2-container {
+	z-index: 10001 !important;
+}

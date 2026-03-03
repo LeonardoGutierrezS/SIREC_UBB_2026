@@ -1,0 +1,357 @@
+/* Gestión de Usuarios - Estilos */
+
+/* Tabs */
+.tabs-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.tab-button {
+    padding: 12px 30px;
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    color: #666;
+    font-size: 1em;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.tab-button:hover {
+    color: #003366;
+    background-color: rgba(0, 51, 102, 0.05);
+}
+
+.tab-button.active {
+    color: #003366;
+    border-bottom-color: #006edf;
+    font-weight: 600;
+}
+
+/* Tab Content */
+.tab-content {
+    margin-top: 20px;
+}
+
+/* Pending Users Section */
+.pending-users-section {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.pending-users-section h2 {
+    color: #003366;
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #006edf;
+    padding-bottom: 10px;
+}
+
+/* All Users Section */
+.all-users-section {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.section-header h2 {
+    color: #003366;
+    font-size: 1.5em;
+    margin: 0;
+}
+
+/* Botón Crear Usuario */
+.btn-create-user {
+    background: linear-gradient(135deg, #006edf 0%, #003366 100%);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    font-size: 0.95em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 110, 223, 0.3);
+}
+
+.btn-create-user:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 110, 223, 0.4);
+}
+
+.btn-create-user:active {
+    transform: translateY(0);
+}
+
+/* Cards de usuarios pendientes */
+.pending-user-card {
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 15px;
+    transition: all 0.3s ease;
+}
+
+.pending-user-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-color: #006edf;
+}
+
+.user-info-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.info-label {
+    font-size: 0.85em;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.info-value {
+    font-size: 1em;
+    color: #003366;
+    font-weight: 500;
+}
+
+/* Botones de acción */
+.action-buttons {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn-approve, .btn-reject, .btn-edit, .btn-deactivate {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 5px;
+    font-size: 0.75em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.btn-approve {
+    background-color: #4caf50;
+    color: white;
+}
+
+.btn-approve:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(76, 175, 80, 0.3);
+}
+
+.btn-reject {
+    background-color: #f44336;
+    color: white;
+}
+
+.btn-reject:hover {
+    background-color: #da190b;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(244, 67, 54, 0.3);
+}
+
+.btn-edit {
+    background-color: #2196f3;
+    color: white;
+}
+
+.btn-edit:hover {
+    background-color: #0b7dda;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(33, 150, 243, 0.3);
+}
+
+.btn-deactivate {
+    background-color: #ff9800;
+    color: white;
+}
+
+.btn-deactivate:hover {
+    background-color: #e68900;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(255, 152, 0, 0.3);
+}
+
+/* Filtros */
+.filters-container {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.filter-input, .filter-select {
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 0.95em;
+    transition: all 0.3s ease;
+}
+
+.filter-input:focus, .filter-select:focus {
+    outline: none;
+    border-color: #006edf;
+    box-shadow: 0 0 0 3px rgba(0, 110, 223, 0.1);
+}
+
+/* Tabla de usuarios */
+.users-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 0.85em;
+    table-layout: fixed;
+    font-family: Arial, sans-serif;
+}
+
+.users-table thead {
+    background-color: #003366;
+    color: white;
+}
+
+.users-table th {
+    padding: 12px 10px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 1em;
+}
+
+.users-table td {
+    padding: 10px;
+    border-bottom: 1px solid #e0e0e0;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    vertical-align: middle;
+    font-size: 1em;
+}
+
+/* Anchos específicos de columnas */
+.users-table th:nth-child(1), /* Nombre */
+.users-table td:nth-child(1) {
+    width: 16%;
+}
+
+.users-table th:nth-child(2), /* Correo */
+.users-table td:nth-child(2) {
+    width: 20%;
+}
+
+.users-table th:nth-child(3), /* RUT */
+.users-table td:nth-child(3) {
+    width: 11%;
+    white-space: nowrap;
+}
+
+.users-table th:nth-child(4), /* Tipo de Usuario */
+.users-table td:nth-child(4) {
+    width: 11%;
+    text-align: center;
+}
+
+.users-table th:nth-child(5), /* Carrera/Cargo */
+.users-table td:nth-child(5) {
+    width: 17%;
+}
+
+.users-table th:nth-child(6), /* Estado */
+.users-table td:nth-child(6) {
+    width: 9%;
+    text-align: center;
+}
+
+.users-table th:nth-child(7), /* Acciones */
+.users-table td:nth-child(7) {
+    width: 16%;
+}
+
+.users-table tbody tr:hover {
+    background-color: #f5f5f5;
+}
+
+/* Badge de estado */
+.status-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 0.85em;
+    font-weight: 600;
+}
+
+.status-badge.active {
+    background-color: #4caf50;
+    color: white;
+}
+
+.status-badge.inactive {
+    background-color: #f44336;
+    color: white;
+}
+
+.status-badge.pending {
+    background-color: #ff9800;
+    color: white;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .tabs-container {
+        flex-direction: column;
+    }
+
+    .tab-button {
+        width: 100%;
+        text-align: left;
+    }
+
+    .section-header {
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
+    }
+
+    .btn-create-user {
+        width: 100%;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+    }
+
+    .btn-approve, .btn-reject, .btn-edit, .btn-deactivate {
+        width: 100%;
+    }
+
+    .users-table {
+        font-size: 0.85em;
+    }
+
+    .users-table th, .users-table td {
+        padding: 8px;
+    }
+}

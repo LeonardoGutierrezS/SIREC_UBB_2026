@@ -1,0 +1,223 @@
+/* Gestión de Penalizaciones - Estilos */
+
+.gestion-penalizaciones-container .penalizaciones-header {
+    margin-bottom: 20px;
+}
+
+.gestion-penalizaciones-container .penalizaciones-header h1 {
+    color: #003366;
+    font-size: 1.75em;
+    margin: 0;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #006edf;
+}
+
+/* Tabs */
+.gestion-penalizaciones-container .tabs-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.gestion-penalizaciones-container .tab-button {
+    padding: 12px 30px;
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    color: #666;
+    font-size: 1em;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.gestion-penalizaciones-container .tab-button:hover {
+    color: #003366;
+    background-color: rgba(0, 51, 102, 0.05);
+}
+
+.gestion-penalizaciones-container .tab-button.active {
+    color: #003366;
+    border-bottom-color: #006edf;
+    font-weight: 600;
+}
+
+/* Tab Content */
+.gestion-penalizaciones-container .tab-content {
+    margin-top: 20px;
+    animation: fadeIn 0.3s ease-in;
+}
+
+/* Section Header (para título de sección y botones) */
+.gestion-penalizaciones-container .section-header-with-button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.gestion-penalizaciones-container .section-header-with-button h2 {
+    color: #003366;
+    font-size: 1.5em;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Tabla */
+.gestion-penalizaciones-container .penalizaciones-table-container {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.gestion-penalizaciones-container .penalizaciones-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.gestion-penalizaciones-container .penalizaciones-table thead {
+    background-color: #003366;
+    color: white;
+}
+
+.gestion-penalizaciones-container .penalizaciones-table th {
+    padding: 15px;
+    text-align: left;
+    font-weight: 600;
+}
+
+.gestion-penalizaciones-container .penalizaciones-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.gestion-penalizaciones-container .penalizaciones-table tbody tr:hover {
+    background-color: #f5f5f5;
+}
+
+/* Botones */
+.gestion-penalizaciones-container .btn-action {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s;
+    font-size: 0.9em;
+}
+
+.gestion-penalizaciones-container .btn-edit {
+    background-color: #ffc107;
+    color: #000;
+}
+
+.gestion-penalizaciones-container .btn-edit:hover {
+    background-color: #e0a800;
+}
+
+.gestion-penalizaciones-container .btn-finalize {
+    background-color: #28a745;
+    color: white;
+}
+
+.gestion-penalizaciones-container .btn-finalize:hover {
+    background-color: #218838;
+}
+
+/* Botón Crear (Estilo similar a botón primario) */
+.gestion-penalizaciones-container .btn-create {
+    background-color: #003366;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.95em;
+    transition: all 0.3s ease;
+}
+
+.gestion-penalizaciones-container .btn-create:hover {
+    background-color: #002244;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 51, 102, 0.2);
+}
+
+/* Badges */
+.gestion-penalizaciones-container .status-badge {
+    padding: 4px 10px;
+    border-radius: 15px;
+    font-size: 0.85em;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.gestion-penalizaciones-container .status-active {
+    background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
+    color: white;
+}
+
+.gestion-penalizaciones-container .status-inactive {
+    background: linear-gradient(135deg, #4CAF50 0%, #2e7d32 100%);
+    color: white;
+}
+
+/* Filtros */
+.gestion-penalizaciones-container .filters-section {
+    margin-bottom: 20px;
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.gestion-penalizaciones-container .search-container {
+    display: flex;
+    width: 100%;
+}
+
+.gestion-penalizaciones-container .search-input {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid #ccc; /* Borde suave */
+    border-radius: 25px; /* Bordes redondeados como en Search component */
+    font-size: 1em;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.gestion-penalizaciones-container .search-input:focus {
+    border-color: #006edf;
+    box-shadow: 0 0 0 3px rgba(0, 110, 223, 0.1);
+}
+
+/* Modal form (simple) - Esto puede ser problemático si usa clases globales de form.css, mejor no usar las mismas clases o prefixear */
+/* Sin embargo, form-group y form-control son muy comunes, si se colisionan con form.css pueden romper otros forms si este css se carga global */
+/* Aquí prefixeamos */
+
+.gestion-penalizaciones-container .form-group {
+    margin-bottom: 15px;
+}
+
+.gestion-penalizaciones-container .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.gestion-penalizaciones-container .form-control {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
