@@ -107,27 +107,11 @@ async function createUsers() {
 }
 
 /**
- * Crea las marcas base
+ * Marcas no se crean en el initial setup minimal
  */
 async function createMarcas() {
   try {
-    const marcaRepository = AppDataSource.getRepository(MarcaSchema);
-    const count = await marcaRepository.count();
-    if (count > 0) return;
-
-    await Promise.all([
-      marcaRepository.save(marcaRepository.create({ Descripcion: "HP" })),
-      marcaRepository.save(marcaRepository.create({ Descripcion: "Dell" })),
-      marcaRepository.save(marcaRepository.create({ Descripcion: "Lenovo" })),
-      marcaRepository.save(marcaRepository.create({ Descripcion: "Asus" })),
-      marcaRepository.save(marcaRepository.create({ Descripcion: "Acer" })),
-      marcaRepository.save(marcaRepository.create({ Descripcion: "Apple" })),
-      marcaRepository.save(marcaRepository.create({ Descripcion: "Samsung" })),
-      marcaRepository.save(marcaRepository.create({ Descripcion: "Epson" })),
-      marcaRepository.save(marcaRepository.create({ Descripcion: "Canon" })),
-      marcaRepository.save(marcaRepository.create({ Descripcion: "Logitech" })),
-    ]);
-    console.log("* => Marcas base creadas exitosamente");
+    console.log("* => Marcas no creadas (Setup Minimal activo)");
   } catch (error) {
     console.error("Error al crear marcas:", error);
   }
@@ -205,14 +189,27 @@ async function createPenalizaciones() {
     if (count > 0) return;
 
     await Promise.all([
-      penalizacionesRepository.save(penalizacionesRepository.create({ Descripcion: "Retraso en devolución (< 7 días)", Dias_Sancion: 3 })),
-      penalizacionesRepository.save(penalizacionesRepository.create({ Descripcion: "Retraso en devolución (> 7 días)", Dias_Sancion: 7 })),
-      penalizacionesRepository.save(penalizacionesRepository.create({ Descripcion: "Daño grave al equipo", Dias_Sancion: 14 })),
+      penalizacionesRepository.save(penalizacionesRepository.create({ Descripcion: "Retraso en devolución de equipo (menor a 7 días)", Dias_Sancion: 3 })),
+      penalizacionesRepository.save(penalizacionesRepository.create({ Descripcion: "Retraso en devolución de equipo (mayor a 7 días)", Dias_Sancion: 7 })),
+      penalizacionesRepository.save(penalizacionesRepository.create({ Descripcion: "Daño leve al equipo prestado", Dias_Sancion: 5 })),
+      penalizacionesRepository.save(penalizacionesRepository.create({ Descripcion: "Daño grave al equipo prestado", Dias_Sancion: 14 })),
       penalizacionesRepository.save(penalizacionesRepository.create({ Descripcion: "Pérdida de equipo", Dias_Sancion: 30 })),
+      penalizacionesRepository.save(penalizacionesRepository.create({ Descripcion: "Uso indebido del equipo", Dias_Sancion: 10 })),
     ]);
     console.log("* => Penalizaciones base creadas exitosamente");
   } catch (error) {
     console.error("Error al crear penalizaciones:", error);
+  }
+}
+
+/**
+ * Función vacía para equipos, necesaria para que index.js no lance un error si se cambia la importación a este archivo minimal.
+ */
+async function createEquipos() {
+  try {
+    console.log("* => Equipos no creados (Setup Minimal activo)");
+  } catch (error) {
+    console.error("Error al crear equipos:", error);
   }
 }
 
@@ -225,5 +222,6 @@ export {
   createCategorias, 
   createEstados,
   createEstadosPrestamo,
+  createEquipos,
   createPenalizaciones 
 };
