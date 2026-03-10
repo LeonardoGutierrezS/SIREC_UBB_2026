@@ -137,6 +137,7 @@ export async function rejectExpiredSolicitudes() {
   } catch (error) {
     console.error("[CHRONOS] CRITICAL ERROR:", error);
     await queryRunner.rollbackTransaction();
+  } finally {
     await queryRunner.release();
   }
 }
