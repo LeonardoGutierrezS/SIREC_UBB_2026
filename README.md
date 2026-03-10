@@ -114,3 +114,13 @@ pm2 serve dist 5173 --name "sirec-frontend" --spa
 ## 📊 Configuración Inicial
 
 Una vez levantados los servicios, el sistema ejecutará automáticamente la configuración base del esquema de base de datos y los datos iniciales (roles, categorías) necesarios para el primer inicio de sesión.
+
+---
+
+/\*\*
+
+- Autor: Leonardo Gutierrez
+- Proyecto: SIREC UBB
+- Versión: 5.0.0
+- Año: 2026
+  \*/

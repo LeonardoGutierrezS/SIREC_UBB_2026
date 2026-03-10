@@ -1,4 +1,11 @@
 "use strict";
+
+/**
+ * Autor: Leonardo Gutierrez
+ * Proyecto: SIREC UBB
+ * Versión: 5.0.0
+ * Año: 2026
+ */
 import cors from "cors";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
@@ -53,7 +60,21 @@ async function setupServer() {
 
     app.use(cookieParser());
 
-    app.use(morgan("dev"));
+    // Configurar morgan para mostrar fecha y hora
+    morgan.token('date', () => {
+      // Retorna la fecha y hora local ajustada (ej: 06/03/2026, 20:56:15)
+      return new Date().toLocaleString('es-CL', { timeZone: 'America/Santiago' });
+    });
+    
+    app.use(morgan('[:date] :method :url :status :response-time ms - :res[content-length]', {
+      skip: (req, res) => {
+        const url = req.baseUrl + req.path;
+        // Omitir logs de polling para las burbujas de notificación (sólo si son exitosos)
+        const isPollingPath = url.includes('/api/user/pending') || url.includes('/api/solicitud');
+        const isSuccess = res.statusCode === 200 || res.statusCode === 304;
+        return isPollingPath && isSuccess;
+      }
+    }));
 
     // Servir archivos estáticos (logos para emails)
     app.use('/public', express.static('public'));

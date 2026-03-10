@@ -16,7 +16,7 @@ export const aprobarSolicitudValidation = Joi.object({
       "any.required": "El ID de solicitud es obligatorio.",
     }),
   Rut_Autorizador: Joi.string()
-    .pattern(/^[0-9]{7,8}-[0-9Kk]$/)
+    .pattern(/^(?:(?:[1-9]\d{0}|[1-2]\d{1})(\.\d{3}){2}|[1-9]\d{6}|[1-2]\d{7}|29\.999\.999|29999999)-[\dkK]$/)
     .required()
     .messages({
       "string.empty": "El RUT del autorizador no puede estar vacío.",
@@ -107,7 +107,7 @@ export const rechazarSolicitudValidation = Joi.object({
       "any.required": "El ID de solicitud es obligatorio.",
     }),
   Rut_Autorizador: Joi.string()
-    .pattern(/^[0-9]{7,8}-[0-9Kk]$/)
+    .pattern(/^(?:(?:[1-9]\d{0}|[1-2]\d{1})(\.\d{3}){2}|[1-9]\d{6}|[1-2]\d{7}|29\.999\.999|29999999)-[\dkK]$/)
     .required()
     .messages({
       "string.empty": "El RUT del autorizador no puede estar vacío.",

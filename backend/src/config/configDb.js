@@ -1,4 +1,11 @@
 "use strict";
+
+/**
+ * Autor: Leonardo Gutierrez
+ * Proyecto: SIREC UBB
+ * Versión: 5.0.0
+ * Año: 2026
+ */
 import { DataSource } from "typeorm";
 import { DATABASE, DB_USERNAME, HOST, PASSWORD } from "./configEnv.js";
 

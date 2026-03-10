@@ -15,13 +15,11 @@ export async function loginService(user) {
       message
     });
 
-    console.log("Buscando usuario con email:", email);
     const userFound = await userRepository.findOne({
       where: { Correo: email },
       relations: ["tipoUsuario", "carrera", "poseesCargos", "poseesCargos.cargo"],
     });
 
-    console.log("Usuario encontrado:", userFound ? "Sí" : "No");
     if (!userFound) {
       return [null, createErrorMessage("email", "Este correo electrónico no está registrado.")];
     }

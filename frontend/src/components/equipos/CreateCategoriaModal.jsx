@@ -52,7 +52,7 @@ const CreateCategoriaModal = ({ show, onClose, onSuccess }) => {
                             placeholder="Ej: Notebook, Proyector, Impresora..."
                             autoComplete="chrome-off"
                             data-lpignore="true"
-                            {...register('Categoria', {
+                            {...register('Descripcion', {
                                 required: 'El nombre de la categoría es obligatorio',
                                 minLength: {
                                     value: 2,
@@ -64,7 +64,7 @@ const CreateCategoriaModal = ({ show, onClose, onSuccess }) => {
                                 }
                             })}
                         />
-                        {errors.Categoria && <span className="error-message">{errors.Categoria.message}</span>}
+                        {errors.Descripcion && <span className="error-message">{errors.Descripcion.message}</span>}
                     </div>
 
                     <div className="modal-actions">

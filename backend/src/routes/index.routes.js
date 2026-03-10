@@ -1,4 +1,11 @@
 "use strict";
+
+/**
+ * Autor: Leonardo Gutierrez
+ * Proyecto: SIREC UBB
+ * Versión: 5.0.0
+ * Año: 2026
+ */
 import { Router } from "express";
 
 // Rutas de autenticación y usuarios

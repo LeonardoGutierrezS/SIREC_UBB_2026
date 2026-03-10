@@ -241,7 +241,7 @@ export async function enviarEmailDirectorNuevaSolicitud(director, solicitud) {
       `,
       actions: `
         <p>Por favor, acceda al sistema para gestionar esta solicitud:</p>
-        <a href="${FRONTEND_URL || "http://localhost:5173"}/gestion-solicitudes?id=${solicitud.ID_Solicitud}" class="button">Revisar Solicitud</a>
+        <a href="${FRONTEND_URL || "http://localhost:5173"}/" class="button">Acceder al Sistema</a>
       `,
       color: "#003b7a"
     });
@@ -293,7 +293,7 @@ export async function enviarEmailNotificacionAdminSolicitudDiaria(admin, solicit
       `,
       actions: `
         <p>Por favor, acceda al sistema para gestionar esta solicitud:</p>
-        <a href="${FRONTEND_URL || "http://localhost:5173"}/gestion-solicitudes?id=${solicitud.ID_Solicitud}" class="button">Gestionar Solicitud</a>
+        <a href="${FRONTEND_URL || "http://localhost:5173"}/" class="button">Acceder al Sistema</a>
       `,
       color: "#003b7a"
     });
@@ -361,7 +361,7 @@ export async function enviarEmailSolicitudAprobada(solicitud, prestamo) {
       `,
       actions: `
         <p>El equipo ya está listo para ser gestionado. Por favor, sigue las instrucciones indicadas arriba.</p>
-        <a href="${FRONTEND_URL || "http://localhost:5173"}/mis-solicitudes" class="button" style="background-color: #28a745;">Ver mis solicitudes</a>
+        <a href="${FRONTEND_URL || "http://localhost:5173"}/" class="button" style="background-color: #28a745;">Ir al Sistema</a>
       `,
       color: "#28a745"
     });
@@ -405,7 +405,7 @@ export async function enviarEmailUsuarioAprobado(user) {
       `,
       actions: `
         <p>Inicia sesión ahora para comenzar a usar nuestros servicios:</p>
-        <a href="${frontendUrl}/auth" class="button" style="background-color: #28a745;">Iniciar Sesión</a>
+        <a href="${frontendUrl}/" class="button" style="background-color: #28a745;">Iniciar Sesión</a>
       `,
       color: "#28a745" // Verde éxito
     });
@@ -501,7 +501,7 @@ export async function enviarEmailCredencialesProvisorias(user) {
       `,
       actions: `
         <p>Accede al sistema para validar tu cuenta:</p>
-        <a href="${frontendUrl}/auth" class="button" style="background-color: #28a745;">Iniciar Sesión</a>
+        <a href="${frontendUrl}/" class="button" style="background-color: #28a745;">Iniciar Sesión</a>
       `,
       color: "#003b7a" // Azul Institucional
     });
@@ -539,7 +539,7 @@ export async function enviarEmailNotificacionAdminAprobacion(admins, solicitud, 
         <div class="detail-item"><span class="detail-label">Equipo:</span> ${solicitud.equipo.Modelo} (${solicitud.equipo.ID_Num_Inv})</div>
       `,
       actions: `
-        <a href="${FRONTEND_URL || "http://localhost:5173"}/gestion-solicitudes?id=${solicitud.ID_Solicitud}" class="button">Ver Detalles de la Solicitud</a>
+        <a href="${FRONTEND_URL || "http://localhost:5173"}/" class="button">Acceder al Sistema</a>
       `,
       color: "#003b7a"
     });

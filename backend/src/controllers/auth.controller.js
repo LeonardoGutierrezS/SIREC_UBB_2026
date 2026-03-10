@@ -13,7 +13,6 @@ import {
 export async function login(req, res) {
   try {
     const { body } = req;
-    console.log("Body recibido:", body);
 
     const { error } = authValidation.validate(body);
 

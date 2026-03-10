@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import SirecLogo from '../Images/SIREC LOGO.png';
 import FaceLogo from '../Images/Face_Blanco.png';
 import { getSolicitudes } from '@services/solicitud.service';
+import { getPendingUsers } from '@services/user.service.js';
 
 const Navbar = () => {
     const navigate = useNavigate();
@@ -14,6 +15,7 @@ const Navbar = () => {
     const userName = user?.nombreCompleto || 'Usuario';
     const [menuOpen, setMenuOpen] = useState(false);
     const [solicitudesPendientes, setSolicitudesPendientes] = useState(0);
+    const [usuariosPendientes, setUsuariosPendientes] = useState(0);
 
     // Obtener solicitudes pendientes para el badge
     useEffect(() => {
@@ -52,6 +54,29 @@ const Navbar = () => {
         
         return () => clearInterval(interval);
     }, [userRole, esDirectorEscuela]);
+
+    // Obtener usuarios pendientes para el badge
+    useEffect(() => {
+        const fetchUsuariosPendientes = async () => {
+            if (userRole === 'Administrador') {
+                try {
+                    const response = await getPendingUsers();
+                    if (response.status === 'Success' && response.data) {
+                        setUsuariosPendientes(response.data.length);
+                    }
+                } catch (error) {
+                    console.error('Error al obtener usuarios pendientes:', error);
+                }
+            }
+        };
+
+        fetchUsuariosPendientes();
+        
+        // Actualizar cada 60 segundos
+        const interval = setInterval(fetchUsuariosPendientes, 60000);
+        
+        return () => clearInterval(interval);
+    }, [userRole]);
 
     const logoutSubmit = () => {
         try {
@@ -109,7 +134,12 @@ const Navbar = () => {
                                         onClick={() => setMenuOpen(false)}
                                     >
                                         <span className="icon">👥</span>
-                                        <span className="text">Gestión de Usuarios</span>
+                                        <span className="text">
+                                            Gestión de Usuarios
+                                            {usuariosPendientes > 0 && (
+                                                <span className="badge-count">{usuariosPendientes}</span>
+                                            )}
+                                        </span>
                                     </NavLink>
                                 </li>
                                 <li>

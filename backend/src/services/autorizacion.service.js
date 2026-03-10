@@ -125,17 +125,25 @@ export async function aprobarSolicitudService(body) {
       const solicitud = prestamoWithRelations.solicitudes[0];
       await enviarEmailSolicitudAprobada(solicitud, prestamoWithRelations);
 
-      // Notificar a todos los administradores activos excepto al principal
-      const admins = await userRepository.find({
-        where: {
-          Cod_TipoUsuario: 1, // Administrador
-          Vigente: true,
-          Rut: Not("21308770-3") // Administrador Principal
-        }
-      });
+      // Solo notificar a los administradores si es una solicitud de Largo Plazo
+      // Las solicitudes diarias son gestionadas directamente por ellos, por lo que no requieren aviso adicional.
+      const isLargoPlazo = solicitud.Fecha_inicio_sol && 
+                           solicitud.Fecha_termino_sol && 
+                           solicitud.Fecha_inicio_sol !== solicitud.Fecha_termino_sol;
 
-      if (admins.length > 0) {
-        await enviarEmailNotificacionAdminAprobacion(admins, solicitud, prestamoWithRelations);
+      if (isLargoPlazo) {
+        // Notificar a todos los administradores activos excepto al principal
+        const admins = await userRepository.find({
+          where: {
+            Cod_TipoUsuario: 1, // Administrador
+            Vigente: true,
+            Rut: Not("21308770-3") // Administrador Principal
+          }
+        });
+
+        if (admins.length > 0) {
+          await enviarEmailNotificacionAdminAprobacion(admins, solicitud, prestamoWithRelations);
+        }
       }
     }
 

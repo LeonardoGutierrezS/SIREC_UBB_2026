@@ -62,7 +62,7 @@ const MarcasSection = () => {
             `¿Estás seguro de que deseas eliminar la marca "${marca.Descripcion}"? Esta acción no se puede deshacer.`
         );
 
-        if (result.isConfirmed) {
+        if (result) {
             try {
                 const response = await deleteMarca(marca.ID_Marca);
                 
