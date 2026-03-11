@@ -378,7 +378,7 @@ async function notificarAdminsNuevaSolicitudDiaria(solicitud) {
 
     // Filtrar localmente por Rol Administrador y asegurar exclusión del principal
     const adminsANotificar = administradores.filter(user => 
-      user.tipoUsuario?.Descripcion === "Administrador" &&
+      user.tipoUsuario?.Descripcion?.toLowerCase() === "administrador" &&
       user.Rut !== "21308770-3"
     );
 

@@ -140,21 +140,14 @@ const CreateUserModal = ({ onClose, onSuccess }) => {
         }
 
         // Mostrar todos los errores acumulados
-        // Mostrar todos los errores acumulados
         if (Object.keys(newErrors).length > 0) {
             setErrors(newErrors);
             setLoading(false);
             return;
         }
 
-        // Los errores locales (cliente) ya se validaron arriba.
-        setLoading(true);
-        
-        // Usamos un temporizador para mostrar el modal de carga.
-        // Si el servidor responde rápido (ej: error de correo duplicado), no alcanzará a mostrarse el spinner.
-        const loadingTimer = setTimeout(() => {
-            showLoadingAlert('Creando Usuario', 'Por favor espere mientras se registra el usuario y se envían las credenciales...');
-        }, 800); 
+        // Mostrar modal de carga
+        showLoadingAlert('Creando Usuario', 'Por favor espere mientras se registra el usuario y se envían las credenciales...');
 
         try {
             const userData = {
@@ -169,22 +162,18 @@ const CreateUserModal = ({ onClose, onSuccess }) => {
 
             const response = await createUser(userData);
             
-            // Importante: Limpiar el temporizador apenas llegue la respuesta
-            clearTimeout(loadingTimer);
-            
+            // closeAlert(); // Comentado para permitir que Swal reemplace el loading automáticamente
+
             if (response.status === 'Success') {
-                // Al mostrar el SuccessAlert, SweetAlert cerrará automáticamente el loading anterior
                 await showSuccessAlert(
                     '¡Éxito!', 
                     'Usuario creado correctamente. Se ha generado una contraseña provisional y se ha enviado al correo del usuario.'
                 );
                 onSuccess();
             } else {
-                // Si el servidor devuelve un error (ej: correo duplicado), cerramos el loading inmediatamente
-                // para que el usuario pueda ver los mensajes de error en el formulario.
-                closeAlert();
-
+                // Manejar errores del servidor (pueden venir varios a la vez)
                 if (response.details && typeof response.details === 'object') {
+                    // Mapear el objeto de errores del servidor (ej: { rut: '...', email: '...' })
                     const serverErrors = {};
                     if (response.details.rut) serverErrors.rut = response.details.rut;
                     if (response.details.email) serverErrors.correo = response.details.email;
@@ -195,6 +184,7 @@ const CreateUserModal = ({ onClose, onSuccess }) => {
                         showErrorAlert('Error', response.message || 'Error al crear usuario');
                     }
                 } else {
+                    // Fallback para mensajes de texto plano
                     const serverMsg = typeof response.details === 'string' ? response.details : (response.message || '');
                     
                     if (serverMsg.toLowerCase().includes('rut')) {
@@ -207,9 +197,7 @@ const CreateUserModal = ({ onClose, onSuccess }) => {
                 }
             }
         } catch (error) {
-            // Asegurarse de limpiar el temporizador y cerrar cualquier alerta abierta
-            if (typeof loadingTimer !== 'undefined') clearTimeout(loadingTimer);
-            closeAlert(); 
+            // closeAlert(); // Comentado para permitir que Swal reemplace el loading
             console.error('Error:', error);
             showErrorAlert('Error', 'No se pudo crear el usuario');
         } finally {

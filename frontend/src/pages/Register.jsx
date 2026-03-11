@@ -214,7 +214,7 @@ const validateNombreCompleto = (nombre) => {
 							type="text"
 							id="nombreCompleto"
 							name="nombreCompleto"
-							placeholder="Diego Alexis Salazar Jara"
+							placeholder="Ej: PrimerNombre ApellidoPaterno ApellidoMaterno"
 							value={formData.nombreCompleto}
 							onChange={handleChange}
 							className={formErrors.nombreCompleto ? 'error' : ''}
@@ -231,7 +231,7 @@ const validateNombreCompleto = (nombre) => {
 							type="text"
 							id="rut"
 							name="rut"
-							placeholder="23.770.330-1"
+							placeholder="XX.XXX.XXX-X"
 							value={formData.rut}
 							onChange={handleChange}
 							className={formErrors.rut || errorRut ? 'error' : ''}
@@ -248,7 +248,7 @@ const validateNombreCompleto = (nombre) => {
 							type="text"
 							id="email"
 							name="email"
-							placeholder="ejemplo@correo.com"
+							placeholder={tipoUsuario === 'Alumno' ? "ejemplo@alumnos.ubiobio.cl" : "ejemplo@ubiobio.cl"}
 							value={formData.email}
 							onChange={handleChange}
 							className={formErrors.email || errorEmail ? 'error' : ''}
@@ -291,7 +291,7 @@ const validateNombreCompleto = (nombre) => {
 								type="text"
 								id="cargo"
 								name="cargo"
-								placeholder="Ej: Profesor Asistente, Director de Carrera"
+								placeholder="Ej: Profesor Asistente, Profesor Titular"
 								value={formData.cargo}
 								onChange={handleChange}
 								className={formErrors.cargo ? 'error' : ''}

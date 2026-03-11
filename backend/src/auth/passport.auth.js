@@ -22,6 +22,21 @@ passport.use(
       });
 
       if (user) {
+        // Verificar si tiene cargo activo de Director de Escuela
+        let esDirectorEscuela = false;
+        
+        // Cargar los cargos del usuario para verificar si es director
+        const poseesCargosRepository = AppDataSource.getRepository("PoseeCargo");
+        const cargosActivos = await poseesCargosRepository.find({
+            where: { Rut_profesor: user.Rut, Fecha_Fin: null },
+            relations: ["cargo"]
+        });
+        
+        const cargoActivo = cargosActivos.length > 0 ? cargosActivos[0] : null;
+        if (cargoActivo && (cargoActivo.cargo?.ID_Cargo === 1 || cargoActivo.cargo?.ID_Cargo === 2)) {
+            esDirectorEscuela = true;
+        }
+
         // Crear objeto con la estructura esperada por los middlewares
         const userPayload = {
           rut: user.Rut,
@@ -30,6 +45,8 @@ passport.use(
           tipoUsuario: user.tipoUsuario?.Descripcion,
           cargo: user.cargo?.Desc_Cargo,
           carrera: user.carrera?.Carrera,
+          idCarrera: user.ID_Carrera, // Inyectado para filtrado de directores
+          esDirectorEscuela: esDirectorEscuela, // Inyectado para acceso a vistas
           vigente: user.Vigente,
         };
         return done(null, userPayload);

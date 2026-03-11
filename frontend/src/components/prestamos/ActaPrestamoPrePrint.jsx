@@ -67,7 +67,7 @@ const ActaPrestamoPrePrint = ({ data, adminName, onClose }) => {
 
             <div className="acta-body">
                 <p className="acta-intro">
-                    En Chillán, a {fechaActual}, se procede a la entrega del equipo computacional detallado a continuación, 
+                    En Concepción, a {fechaActual}, se procede a la entrega del equipo computacional detallado a continuación, 
                     bajo la modalidad de préstamo institucional del Sistema de Reserva de Equipos Computacionales (SIREC).
                 </p>
 
@@ -104,12 +104,12 @@ const ActaPrestamoPrePrint = ({ data, adminName, onClose }) => {
                             <tr>
                                 <td><strong>N° Inventario:</strong></td>
                                 <td>{equipo.inv}</td>
-                                <td><strong>Marca/Categoría:</strong></td>
-                                <td>{equipo.marca} / {equipo.categoria}</td>
+                                <td><strong>Categoría:</strong></td>
+                                <td>{equipo.categoria}</td>
                             </tr>
                             <tr>
-                                <td><strong>Modelo:</strong></td>
-                                <td colSpan="3">{equipo.modelo}</td>
+                                <td><strong>Marca/Modelo:</strong></td>
+                                <td colSpan="3">{equipo.marca} / {equipo.modelo}</td>
                             </tr>
                         </tbody>
                     </table>

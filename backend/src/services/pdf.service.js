@@ -128,7 +128,7 @@ export async function generarPDFAutorizacion(idSolicitud, adminName) {
       .font("Helvetica")
       .fillColor("#000000")
       .text(
-        `En Chillán, a ${fechaActual}, se procede a la entrega del equipo computacional detallado a continuación, bajo la modalidad de préstamo institucional del Sistema de Reserva de Equipos Computacionales (SIREC).`,
+        `En Concepción, a ${fechaActual}, se procede a la entrega del equipo computacional detallado a continuación, bajo la modalidad de préstamo institucional del Sistema de Reserva de Equipos Computacionales (SIREC).`,
         L_MARGIN, doc.y, { align: "justify", width: CONTENT_WIDTH }
       )
       .moveDown(1);
@@ -157,8 +157,8 @@ export async function generarPDFAutorizacion(idSolicitud, adminName) {
 
     // 2. IDENTIFICACIÓN DEL EQUIPO
     doc.fontSize(headerSize).font("Helvetica-Bold").fillColor("#003366").text("2. IDENTIFICACIÓN DEL EQUIPO", L_MARGIN).moveDown(0.4);
-    drawGridRow("N° Inventario:", equipo.ID_Num_Inv, "Marca/Cat:", `${equipo.marca?.Descripcion || 'Genérica'} / ${equipo.categoria?.Descripcion || 'Equipo'}`);
-    drawGridRow("Modelo:", equipo.Modelo, "N° Serie:", equipo.Numero_Serie);
+    drawGridRow("N° Inventario:", equipo.ID_Num_Inv, "Categoría:", equipo.categoria?.Descripcion || 'Equipo');
+    drawGridRow("Marca/Modelo:", `${equipo.marca?.Descripcion || 'Genérica'} / ${equipo.Modelo}`, "N° Serie:", equipo.Numero_Serie);
 
     // Agregar especificaciones si existen
     if (equipo.especificaciones && equipo.especificaciones.length > 0) {

@@ -129,7 +129,7 @@ const PendingUsersSection = () => {
 
 // Sección de todos los usuarios
 const AllUsersSection = () => {
-    const { users, loading, filters, setFilters, handleDeactivate } = useAllUsers();
+    const { users, loading, filters, setFilters, handleDeactivate, fetchAllUsers } = useAllUsers();
     const [showCreateModal, setShowCreateModal] = useState(false);
     const [showEditModal, setShowEditModal] = useState(false);
     const [selectedUser, setSelectedUser] = useState(null);
@@ -142,9 +142,8 @@ const AllUsersSection = () => {
     const handleEditSuccess = () => {
         setShowEditModal(false);
         setSelectedUser(null);
-        // Forzar re-fetch de usuarios sin recargar toda la página
-        window.location.href = window.location.href.split('#')[0] + '#reload';
-        window.location.reload();
+        // Recargar la lista de usuarios sin recargar la página completa
+        fetchAllUsers();
     };
 
     if (loading) {
@@ -269,7 +268,7 @@ const AllUsersSection = () => {
                     onClose={() => setShowCreateModal(false)}
                     onSuccess={() => {
                         setShowCreateModal(false);
-                        window.location.reload(); // Recargar para ver el nuevo usuario
+                        fetchAllUsers(); // Fetch sin recargar página
                     }}
                 />
             )}

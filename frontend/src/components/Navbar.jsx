@@ -11,7 +11,7 @@ const Navbar = () => {
     const navigate = useNavigate();
     const user = JSON.parse(sessionStorage.getItem('usuario')) || '';
     const esDirectorEscuela = user?.esDirectorEscuela || false;
-    const userRole = esDirectorEscuela ? 'Director de Escuela' : user?.tipoUsuario;
+    const userRole = esDirectorEscuela ? (user?.cargo || 'Director de Escuela') : user?.tipoUsuario;
     const userName = user?.nombreCompleto || 'Usuario';
     const [menuOpen, setMenuOpen] = useState(false);
     const [solicitudesPendientes, setSolicitudesPendientes] = useState(0);

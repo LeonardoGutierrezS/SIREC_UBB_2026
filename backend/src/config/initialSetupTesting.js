@@ -171,8 +171,8 @@ async function createUsers() {
     // 2. Crear Director de Escuela IECI
     const directorIECI = await userRepository.save(
       userRepository.create({
-        Nombre_Completo: "Pabla Lucía Ortega Aras",
-        Rut: "15234567-8",
+        Nombre_Completo: "María José Martínez Vega",
+        Rut: "15234567-4", // RUT Válido
         Correo: "directorieci@gmail.cl",
         Contrasenia: await encryptPassword("director1234"),
         Vigente: true,
@@ -194,8 +194,8 @@ async function createUsers() {
     // 3. Crear Director de Escuela ICI
     const directorICI = await userRepository.save(
       userRepository.create({
-        Nombre_Completo: "Tatiana Noemí Sanhueza",
-        Rut: "16234567-9",
+        Nombre_Completo: "Carolina Andrea Silva Ramos",
+        Rut: "16234567-6", // RUT Válido
         Correo: "directorici@gmail.cl",
         Contrasenia: await encryptPassword("director1234"),
         Vigente: true,
@@ -217,8 +217,8 @@ async function createUsers() {
     // 4. Crear Profesores con cargo "Otro"
     const profesor1 = await userRepository.save(
       userRepository.create({
-        Nombre_Completo: "Carlos Alberto Fernández López",
-        Rut: "16789012-3",
+        Nombre_Completo: "Felipe Ignacio Castro Ruiz",
+        Rut: "16789012-1", // RUT Válido
         Correo: "profesor1.2024@gmail.cl",
         Contrasenia: await encryptPassword("profesor1234"),
         Vigente: true,
@@ -239,8 +239,8 @@ async function createUsers() {
 
     const profesor2 = await userRepository.save(
       userRepository.create({
-        Nombre_Completo: "Ana María Rodríguez Silva",
-        Rut: "17345678-9",
+        Nombre_Completo: "Valentina Paz Gómez Herrera",
+        Rut: "17345678-6", // RUT Válido
         Correo: "profesor2.2024@gmail.cl",
         Contrasenia: await encryptPassword("profesor1234"),
         Vigente: true,
@@ -263,7 +263,7 @@ async function createUsers() {
     await Promise.all([
       userRepository.save(
         userRepository.create({
-          Nombre_Completo: "Diego Sebastián Ampuero Belmar",
+          Nombre_Completo: "Javier Eduardo Campos Neira",
           Rut: "21151897-9",
           Correo: "alumno1.2024@gmail.cl",
           Contrasenia: await encryptPassword("alumno1234"),
@@ -276,7 +276,7 @@ async function createUsers() {
       ),
       userRepository.save(
         userRepository.create({
-          Nombre_Completo: "Alexander Benjamín Marcelo Carrasco Fuentes",
+          Nombre_Completo: "Sebastián Ignacio Torres Castro",
           Rut: "20630735-8",
           Correo: "alumno2.2024@gmail.cl",
           Contrasenia: await encryptPassword("alumno1234"),
@@ -289,7 +289,7 @@ async function createUsers() {
       ),
       userRepository.save(
         userRepository.create({
-          Nombre_Completo: "Pablo Andrés Castillo Fernández",
+          Nombre_Completo: "Matías Alejandro Díaz Soto",
           Rut: "20738450-K",
           Correo: "alumno3.2024@gmail.cl",
           Contrasenia: await encryptPassword("alumno1234"),
@@ -302,7 +302,7 @@ async function createUsers() {
       ),
       userRepository.save(
         userRepository.create({
-          Nombre_Completo: "Felipe Andrés Henríquez Zapata",
+          Nombre_Completo: "Joaquín Alonso Pérez Molina",
           Rut: "20976635-3",
           Correo: "alumno4.2024@gmail.cl",
           Contrasenia: await encryptPassword("alumno1234"),
@@ -315,7 +315,7 @@ async function createUsers() {
       ),
       userRepository.save(
         userRepository.create({
-          Nombre_Completo: "Diego Alexis Meza Ortega",
+          Nombre_Completo: "Tomás Vicente Rojas Fuentes",
           Rut: "21172447-1",
           Correo: "alumno5.2024@gmail.cl",
           Contrasenia: await encryptPassword("alumno1234"),
@@ -328,7 +328,7 @@ async function createUsers() {
       ),
       userRepository.save(
         userRepository.create({
-          Nombre_Completo: "Juan Pablo Rosas Martin",
+          Nombre_Completo: "Martina Jesús Morales Salas",
           Rut: "20738415-1",
           Correo: "alumno6.2024@gmail.cl",
           Contrasenia: await encryptPassword("alumno1234"),

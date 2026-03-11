@@ -16,12 +16,12 @@ const Home = () => {
     const userName = user?.nombreCompleto || 'Usuario';
     const esDirectorEscuela = user?.esDirectorEscuela || false;
     const tipoUsuario = user?.tipoUsuario || 'Sin tipo de usuario';
-    const userRole = esDirectorEscuela ? 'Director de Escuela' : tipoUsuario;
+    const userRole = esDirectorEscuela ? (user?.cargo || 'Director de Escuela') : tipoUsuario;
 
 
     // Determinar icono y color según rol
     const getRoleConfig = () => {
-        if (esDirectorEscuela) return { icon: faBuilding, color: '#ffffff', bg: 'rgba(139, 92, 246, 0.85)', label: 'Director de Escuela' };
+        if (esDirectorEscuela) return { icon: faBuilding, color: '#ffffff', bg: 'rgba(139, 92, 246, 0.85)', label: userRole };
         switch (tipoUsuario) {
             case 'Administrador': return { icon: faUserShield, color: '#ffffff', bg: 'rgba(239, 68, 68, 0.85)', label: 'Administrador' };
             case 'Profesor': return { icon: faChalkboardTeacher, color: '#ffffff', bg: 'rgba(245, 158, 11, 0.85)', label: 'Profesor' };

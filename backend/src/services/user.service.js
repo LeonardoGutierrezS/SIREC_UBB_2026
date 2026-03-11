@@ -2,6 +2,7 @@
 import User from "../entity/user.entity.js";
 import { AppDataSource } from "../config/configDb.js";
 import { comparePassword, encryptPassword } from "../helpers/bcrypt.helper.js";
+import { IsNull } from "typeorm";
 
 export async function getUserService(query) {
   try {
@@ -72,14 +73,18 @@ export async function updateUserService(query, body) {
 
     if (!userFound) return [null, "Usuario no encontrado"];
 
-    const existingRut = await userRepository.findOne({ where: { Rut: body.rut } });
-    if (existingRut && existingRut.Rut !== userFound.Rut) {
-      return [null, "El RUT ingresado ya está registrado para otro usuario"];
+    if (body.rut) {
+      const existingRut = await userRepository.findOne({ where: { Rut: body.rut } });
+      if (existingRut && existingRut.Rut !== userFound.Rut) {
+        return [null, "El RUT ingresado ya está registrado para otro usuario"];
+      }
     }
 
-    const existingEmail = await userRepository.findOne({ where: { Correo: body.email } });
-    if (existingEmail && existingEmail.Rut !== userFound.Rut) {
-      return [null, "El correo electrónico ingresado ya está registrado para otro usuario"];
+    if (body.email) {
+      const existingEmail = await userRepository.findOne({ where: { Correo: body.email } });
+      if (existingEmail && existingEmail.Rut !== userFound.Rut) {
+        return [null, "El correo electrónico ingresado ya está registrado para otro usuario"];
+      }
     }
 
     if (body.password) {
@@ -141,12 +146,13 @@ export async function updateUserService(query, body) {
         // Cerrar el cargo actual si existe
         if (cargoAnterior) {
           await PoseeCargoSchema.update(
-            { Rut: userFound.Rut, ID_Cargo: cargoAnterior, Fecha_Fin: null },
+            { Rut_profesor: userFound.Rut, ID_Cargo: cargoAnterior, Fecha_Fin: IsNull() },
             { Fecha_Fin: new Date() }
           );
         }
         
         userFound.ID_Cargo = null;
+        userFound.cargo = null;
       } else {
         const cargo = await CargoSchema.findOne({ where: { ID_Cargo: body.idCargo } });
         if (!cargo) return [null, "Cargo no encontrado"];
@@ -156,7 +162,7 @@ export async function updateUserService(query, body) {
           // Cerrar cargo anterior si existe
           if (cargoAnterior) {
             await PoseeCargoSchema.update(
-              { Rut: userFound.Rut, ID_Cargo: cargoAnterior, Fecha_Fin: null },
+              { Rut_profesor: userFound.Rut, ID_Cargo: cargoAnterior, Fecha_Fin: IsNull() },
               { Fecha_Fin: new Date() }
             );
           }
@@ -174,12 +180,12 @@ export async function updateUserService(query, body) {
         } else if (body.descripcionCargo !== undefined) {
           // Si no cambió el cargo pero sí la descripción, actualizar
           await PoseeCargoSchema.update(
-            { Rut: userFound.Rut, ID_Cargo: body.idCargo, Fecha_Fin: null },
+            { Rut_profesor: userFound.Rut, ID_Cargo: body.idCargo, Fecha_Fin: IsNull() },
             { Descripcion_Cargo: body.descripcionCargo || null }
           );
         }
-        
         userFound.ID_Cargo = cargo.ID_Cargo;
+        userFound.cargo = cargo; // Forzar actualización de la relación completa
       }
     }
 
@@ -191,10 +197,12 @@ export async function updateUserService(query, body) {
           return [null, "No se puede quitar la carrera a un alumno"];
         }
         userFound.ID_Carrera = null;
+        userFound.carrera = null;
       } else {
         const carrera = await CarreraSchema.findOne({ where: { ID_Carrera: body.idCarrera } });
         if (!carrera) return [null, "Carrera no encontrada"];
         userFound.ID_Carrera = carrera.ID_Carrera;
+        userFound.carrera = carrera; // Forzar actualización de la relación completa
       }
     }
 
