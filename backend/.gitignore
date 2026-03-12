@@ -10,6 +10,13 @@ lerna-debug.log*
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
+# Custom Scripts and Test outputs
+cookie.txt
+
+# Uploads
+uploads/
+public/uploads/
+
 # Runtime data
 pids
 *.pid
