@@ -112,6 +112,7 @@ export async function updateUserService(query, body) {
       const tipoUsuario = await TipoUsuarioSchema.findOne({ where: { Cod_TipoUsuario: body.codTipoUsuario } });
       if (!tipoUsuario) return [null, "Tipo de usuario no encontrado"];
       userFound.Cod_TipoUsuario = tipoUsuario.Cod_TipoUsuario;
+      userFound.tipoUsuario = tipoUsuario; // Forzar actualización de la relación completa
     }
 
     // Validar requisitos según tipo de usuario

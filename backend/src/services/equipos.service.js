@@ -285,6 +285,7 @@ export async function updateEquipoService(id, body) {
 export async function deleteEquipoService(id) {
   try {
     const equipoRepository = AppDataSource.getRepository(Equipos);
+    const especificacionesRepository = AppDataSource.getRepository(EspecificacionesHW);
 
     const equipoFound = await equipoRepository.findOne({
       where: { ID_Num_Inv: id },
@@ -293,10 +294,18 @@ export async function deleteEquipoService(id) {
 
     if (!equipoFound) return [null, "Equipo no encontrado"];
 
+    // Primero, borrar las especificaciones técnicas asociadas para evitar violación de llave foránea
+    if (equipoFound.especificaciones && equipoFound.especificaciones.length > 0) {
+      await especificacionesRepository.remove(equipoFound.especificaciones);
+    }
+
     const equipoDeleted = await equipoRepository.remove(equipoFound);
 
     return [equipoDeleted, null];
   } catch (error) {
+    if (error.code === '23503') {
+      return [null, "No se puede eliminar el equipo porque tiene registros asociados (solicitudes, préstamos, actas, etc.)"];
+    }
     console.error("Error al eliminar el equipo:", error);
     return [null, "Error interno del servidor"];
   }

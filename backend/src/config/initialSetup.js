@@ -28,11 +28,11 @@ async function createTiposUsuario() {
     const count = await tipoUsuarioRepository.count();
     if (count > 0) return;
 
-    await Promise.all([
-      tipoUsuarioRepository.save(tipoUsuarioRepository.create({ Descripcion: "Administrador" })),
-      tipoUsuarioRepository.save(tipoUsuarioRepository.create({ Descripcion: "Alumno" })),
-      tipoUsuarioRepository.save(tipoUsuarioRepository.create({ Descripcion: "Profesor" })),
-    ]);
+    // Se insertan secuencialmente y con código forzado para garantizar que
+    // Administrador = 1, Alumno = 2 y Profesor = 3 en cada inicialización
+    await tipoUsuarioRepository.save(tipoUsuarioRepository.create({ Cod_TipoUsuario: 1, Descripcion: "Administrador" }));
+    await tipoUsuarioRepository.save(tipoUsuarioRepository.create({ Cod_TipoUsuario: 2, Descripcion: "Alumno" }));
+    await tipoUsuarioRepository.save(tipoUsuarioRepository.create({ Cod_TipoUsuario: 3, Descripcion: "Profesor" }));
     console.log("* => Tipos de usuario creados exitosamente");
   } catch (error) {
     console.error("Error al crear tipos de usuario:", error);
@@ -48,11 +48,11 @@ async function createCargos() {
     const count = await cargoRepository.count();
     if (count > 0) return;
 
-    await Promise.all([
-      cargoRepository.save(cargoRepository.create({ ID_Cargo: 1, Desc_Cargo: "Director/a de Escuela IECI" })),
-      cargoRepository.save(cargoRepository.create({ ID_Cargo: 2, Desc_Cargo: "Director/a de Escuela ICI" })),
-      cargoRepository.save(cargoRepository.create({ ID_Cargo: 3, Desc_Cargo: "Otro" })),
-    ]);
+    // Se insertan secuencialmente y con ID forzado para garantizar que
+    // Director IECI = 1, Director ICI = 2 y Otro = 3
+    await cargoRepository.save(cargoRepository.create({ ID_Cargo: 1, Desc_Cargo: "Director/a de Escuela IECI" }));
+    await cargoRepository.save(cargoRepository.create({ ID_Cargo: 2, Desc_Cargo: "Director/a de Escuela ICI" }));
+    await cargoRepository.save(cargoRepository.create({ ID_Cargo: 3, Desc_Cargo: "Otro" }));
     console.log("* => Cargos creados exitosamente");
   } catch (error) {
     console.error("Error al crear cargos:", error);
@@ -68,10 +68,9 @@ async function createCarreras() {
     const count = await carreraRepository.count();
     if (count > 0) return;
 
-    await Promise.all([
-      carreraRepository.save(carreraRepository.create({ Nombre_Carrera: "Ingeniería de Ejecución en Computación e Informática" })),
-      carreraRepository.save(carreraRepository.create({ Nombre_Carrera: "Ingeniería Civil Informática" })),
-    ]);
+    // Se insertan secuencialmente para garantizar el orden de los IDs autogenerados
+    await carreraRepository.save(carreraRepository.create({ Nombre_Carrera: "Ingeniería de Ejecución en Computación e Informática" }));
+    await carreraRepository.save(carreraRepository.create({ Nombre_Carrera: "Ingeniería Civil Informática" }));
     console.log("* => Carreras creadas exitosamente");
   } catch (error) {
     console.error("Error al crear carreras:", error);
