@@ -26,7 +26,7 @@ export async function login(req, res) {
 
     res.cookie("jwt", accessToken, {
       httpOnly: true,
-      maxAge: 24 * 60 * 60 * 1000,
+      maxAge: 8 * 60 * 60 * 1000, // 8 horas en milisegundos
     });
 
     handleSuccess(res, 200, "Inicio de sesión exitoso", { token: accessToken });

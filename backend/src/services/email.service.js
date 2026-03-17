@@ -564,6 +564,19 @@ export async function enviarEmailNotificacionAdminAprobacion(admins, solicitud, 
 export async function enviarEmailEquipoEntregado(solicitud, prestamo) {
   try {
     const attachments = await getCommonAttachments();
+    
+    // [NUEVO] Si el préstamo tiene un acta firmada, adjuntarla al correo
+    if (prestamo && prestamo.Documento_Suscrito) {
+      const fullPath = path.join(process.cwd(), prestamo.Documento_Suscrito);
+      if (fs.existsSync(fullPath)) {
+        attachments.push({
+          filename: 'Acta_Suscrita_SIREC.pdf',
+          path: fullPath
+        });
+        console.log(`📎 Acta firmada adjuntada al correo para: ${solicitud.usuario.Correo}`);
+      }
+    }
+
     const equipmentInfo = formatEquipoDetails(solicitud.equipo);
 
     const html = getUnifiedEmailTemplate({

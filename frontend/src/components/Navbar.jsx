@@ -9,7 +9,7 @@ import { getPendingUsers } from '@services/user.service.js';
 
 const Navbar = () => {
     const navigate = useNavigate();
-    const user = JSON.parse(sessionStorage.getItem('usuario')) || '';
+    const user = JSON.parse(localStorage.getItem('usuario')) || '';
     const esDirectorEscuela = user?.esDirectorEscuela || false;
     const userRole = esDirectorEscuela ? (user?.cargo || 'Director de Escuela') : user?.tipoUsuario;
     const userName = user?.nombreCompleto || 'Usuario';

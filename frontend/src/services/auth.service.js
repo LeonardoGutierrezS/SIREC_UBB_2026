@@ -23,7 +23,7 @@ export async function login(dataUser) {
                 carrera,
                 vigente
             };
-            sessionStorage.setItem('usuario', JSON.stringify(userData));
+            localStorage.setItem('usuario', JSON.stringify(userData));
             axios.defaults.headers.common['Authorization'] = `Bearer ${data.data.token}`;
             cookies.set('jwt-auth', data.data.token, {path:'/'});
             return response.data;
@@ -65,7 +65,7 @@ export async function register(data) {
 export async function logout() {
     try {
         await axios.post('/auth/logout');
-        sessionStorage.removeItem('usuario');
+        localStorage.removeItem('usuario');
         cookies.remove('jwt');
         cookies.remove('jwt-auth');
     } catch (error) {

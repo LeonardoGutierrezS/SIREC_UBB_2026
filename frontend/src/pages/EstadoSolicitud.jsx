@@ -144,10 +144,18 @@ const EstadoSolicitud = () => {
         return clases[codEstado] || 'badge-default';
     };
 
+    // Función para parsear fecha "YYYY-MM-DD" como local para evitar desfase UTC
+    const parseLocalDate = (dateStr) => {
+        if (!dateStr) return null;
+        if (dateStr.includes('T') || dateStr.includes(':')) return new Date(dateStr);
+        const [year, month, day] = dateStr.split('-').map(Number);
+        return new Date(year, month - 1, day);
+    };
+
     const formatFecha = (fecha) => {
         if (!fecha) return '-';
         try {
-            const date = new Date(fecha);
+            const date = parseLocalDate(fecha);
             return date.toLocaleString('es-CL', { 
                 year: 'numeric', 
                 month: '2-digit', 

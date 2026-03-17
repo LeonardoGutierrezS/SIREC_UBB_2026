@@ -12,7 +12,7 @@ import {
 import '@styles/Home.css';
 
 const Home = () => {
-    const user = JSON.parse(sessionStorage.getItem('usuario')) || {};
+    const user = JSON.parse(localStorage.getItem('usuario')) || {};
     const userName = user?.nombreCompleto || 'Usuario';
     const esDirectorEscuela = user?.esDirectorEscuela || false;
     const tipoUsuario = user?.tipoUsuario || 'Sin tipo de usuario';

@@ -1,7 +1,7 @@
 "use strict";
 
 /**
- * Autor: Leonardo Gutierrez
+ * Autor: Leonardo Gutierrez Sanchez
  * Proyecto: SIREC UBB
  * Versión: 5.0.0
  * Año: 2026

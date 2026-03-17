@@ -26,6 +26,10 @@ const router = createBrowserRouter([
     errorElement: <Error404/>,
     children: [
       {
+        index: true,
+        element: <Home />
+      },
+      {
         path: '/home',
         element: <Home/>
       },

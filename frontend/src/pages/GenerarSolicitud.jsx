@@ -141,9 +141,14 @@ const GenerarSolicitud = () => {
                 solicitudData.Fecha_inicio_sol = fechaInicio.toISOString().split('T')[0];
                 solicitudData.Fecha_termino_sol = fechaTermino.toISOString().split('T')[0];
             } else {
-                const soloFecha = now.toISOString().split('T')[0];
-                solicitudData.Fecha_inicio_sol = soloFecha;
-                solicitudData.Fecha_termino_sol = soloFecha;
+                // Obtener fecha local en formato YYYY-MM-DD para evitar desfase UTC
+                const year = now.getFullYear();
+                const month = String(now.getMonth() + 1).padStart(2, '0');
+                const day = String(now.getDate()).padStart(2, '0');
+                const soloFechaLocal = `${year}-${month}-${day}`;
+                
+                solicitudData.Fecha_inicio_sol = soloFechaLocal;
+                solicitudData.Fecha_termino_sol = soloFechaLocal;
             }
 
             const response = await createSolicitud(solicitudData);

@@ -26,8 +26,8 @@ Siga estos pasos para configurar el entorno local o de producción.
 ### 1. Clonar el repositorio
 
 ```bash
-git clone https://github.com/LeonardoGutierrezS/Proyecto_TallerDeDesarrollo_2025-1.git
-cd Proyecto_TallerDeDesarrollo_2025-1
+git clone https://github.com/LeonardoGutierrezS/SIREC_UBB_2026.git
+cd SIREC_UBB_2026
 ```
 
 ### 2. Configurar Variables de Entorno
@@ -82,7 +82,7 @@ PM2 es esencial para asegurar que los servicios de SIREC UBB se mantengan en eje
 Desde la carpeta `backend`, ejecute:
 
 ```bash
-pm2 start src/server.js --name "sirec-backend"
+pm2 start src/index.js --name "sirec-backend"
 ```
 
 ### Despliegue del Frontend
@@ -99,7 +99,7 @@ npm run build
 2. Servir con PM2 (usando un servidor estático como `serve`):
 
 ```bash
-pm2 serve dist 5173 --name "sirec-frontend" --spa
+pm2 start npm --name "sirec-frontend" -- run preview
 ```
 
 ### Comandos Útiles de PM2
@@ -117,10 +117,13 @@ Una vez levantados los servicios, el sistema ejecutará automáticamente la conf
 
 ---
 
-/\*\*
+## ✒️ Autoría y Créditos
 
-- Autor: Leonardo Gutierrez
-- Proyecto: SIREC UBB
-- Versión: 5.0.0
-- Año: 2026
-  \*/
+> **Desarrollado por:** [Leonardo Gutierrez Sanchez](https://github.com/LeonardoGutierrezS)  
+> **Proyecto:** SIREC UBB (Sistema de Reserva de Equipos)  
+> **Versión:** 5.0.0  
+> **Año:** 2026
+
+---
+
+© 2026 SIREC UBB - Todos los derechos reservados.

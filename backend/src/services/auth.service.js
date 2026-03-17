@@ -54,7 +54,7 @@ export async function loginService(user) {
     };
 
     const accessToken = jwt.sign(payload, ACCESS_TOKEN_SECRET, {
-      expiresIn: "1d",
+      expiresIn: "8h",
     });
 
     return [accessToken, null];

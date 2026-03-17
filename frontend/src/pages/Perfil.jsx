@@ -7,7 +7,7 @@ import { showErrorAlert, showSuccessAlert } from '@helpers/sweetAlert.js';
 import '@styles/perfil.css';
 
 const Perfil = () => {
-    const user = JSON.parse(sessionStorage.getItem('usuario')) || {};
+    const user = JSON.parse(localStorage.getItem('usuario')) || {};
     const [loading, setLoading] = useState(false);
     const [passwords, setPasswords] = useState({
         currentPassword: '',
@@ -21,6 +21,14 @@ const Perfil = () => {
 
     const esDirectorEscuela = user?.esDirectorEscuela || false;
     const userRole = esDirectorEscuela ? 'Director de Escuela' : user?.tipoUsuario;
+    
+    // Función para parsear fecha "YYYY-MM-DD" como local para evitar desfase UTC
+    const parseLocalDate = (dateStr) => {
+        if (!dateStr) return null;
+        if (dateStr.includes('T') || dateStr.includes(':')) return new Date(dateStr);
+        const [year, month, day] = dateStr.split('-').map(Number);
+        return new Date(year, month - 1, day);
+    };
 
     const handlePasswordChange = (e) => {
         const { name, value } = e.target;
@@ -117,7 +125,7 @@ const Perfil = () => {
                             <li key={s.ID} style={{marginBottom: '5px'}}>
                                 <strong>{s.penalizacion?.Descripcion}</strong> 
                                 <br/>
-                                <small>Vigente hasta: {new Date(s.Fecha_Fin).toLocaleDateString('es-CL')}</small>
+                                <small>Vigente hasta: {parseLocalDate(s.Fecha_Fin).toLocaleDateString('es-CL')}</small>
                             </li>
                         ))}
                     </ul>
@@ -301,7 +309,7 @@ const Perfil = () => {
                                         return (
                                             <div key={sol.ID_Solicitud} className="perfil-solicitud-item">
                                                 <div className="item-info">
-                                                    <span className="item-date">{new Date(sol.Fecha_Sol).toLocaleDateString()}</span>
+                                                    <span className="item-date">{parseLocalDate(sol.Fecha_Sol).toLocaleDateString('es-CL')}</span>
                                                     <span className="item-equipo">{sol.equipo?.categoria?.Descripcion} - {sol.ID_Num_Inv}</span>
                                                     {isLargoPlazo && <span className="item-tipo">📆 Largo Plazo</span>}
                                                 </div>

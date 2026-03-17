@@ -6,12 +6,22 @@ import Swal from 'sweetalert2';
 const PrestamoDetalleModal = ({ show, onClose, prestamo }) => {
     if (!show || !prestamo) return null;
 
+    // Función para parsear fecha "YYYY-MM-DD" como local para evitar desfase UTC
+    const parseLocalDate = (dateStr) => {
+        if (!dateStr) return null;
+        // Si ya incluye tiempo (ISO string completo), usar new Date() directo
+        if (dateStr.includes('T') || dateStr.includes(':')) return new Date(dateStr);
+        
+        const [year, month, day] = dateStr.split('-').map(Number);
+        return new Date(year, month - 1, day);
+    };
+
     // Formatear fecha y hora
     const formatFecha = (fecha) => {
         if (!fecha) return '-';
         try {
-            const date = new Date(fecha);
-            return date.toLocaleString('es-CL', { 
+            const date = parseLocalDate(fecha);
+            return date.toLocaleDateString('es-CL', { 
                 year: 'numeric', 
                 month: 'long', 
                 day: 'numeric'
@@ -24,7 +34,7 @@ const PrestamoDetalleModal = ({ show, onClose, prestamo }) => {
     const formatFechaHora = (fecha, hora) => {
         if (!fecha) return '-';
         try {
-            const date = new Date(fecha);
+            const date = parseLocalDate(fecha);
             const fechaStr = date.toLocaleDateString('es-CL', { 
                 year: 'numeric', 
                 month: 'long', 

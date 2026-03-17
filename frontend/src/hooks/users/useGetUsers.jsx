@@ -21,7 +21,7 @@ const useUsers = () => {
 
     const dataLogged = (users) => {
         try {
-            const { rut } = JSON.parse(sessionStorage.getItem('usuario'));
+            const { rut } = JSON.parse(localStorage.getItem('usuario'));
             const userIndex = users.findIndex(user => user.rut === rut);
             if(userIndex !== -1) {
                 users.splice(userIndex, 1);

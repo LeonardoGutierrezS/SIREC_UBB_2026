@@ -22,4 +22,25 @@ instance.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
+instance.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+      // Ignorar errores de login/register que arrojan 401 por malas credenciales
+      if (
+        error.config.url && 
+        !error.config.url.includes('/auth/login') && 
+        !error.config.url.includes('/auth/register')
+      ) {
+        // Limpiamos todo el almacenamiento y redirigimos de forma violenta al /auth
+        localStorage.removeItem('usuario');
+        cookies.remove('jwt', { path: '/' });
+        cookies.remove('jwt-auth', { path: '/' });
+        window.location.href = '/auth';
+      }
+    }
+    return Promise.reject(error);
+  }
+);
+
 export default instance;

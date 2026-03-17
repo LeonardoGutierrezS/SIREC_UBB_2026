@@ -42,12 +42,20 @@ const GestionSolicitudes = () => {
         return 'Requiere aprobación del Director'; // Fallback
     };
 
+    // Función para parsear fecha "YYYY-MM-DD" como local para evitar desfase UTC
+    const parseLocalDate = (dateStr) => {
+        if (!dateStr) return null;
+        if (dateStr.includes('T') || dateStr.includes(':')) return new Date(dateStr);
+        const [year, month, day] = dateStr.split('-').map(Number);
+        return new Date(year, month - 1, day);
+    };
+
     // Determinar tipo de solicitud basado en fechas (ignora la hora)
     const getTipoSolicitud = (solicitud) => {
         if (!solicitud.Fecha_inicio_sol || !solicitud.Fecha_termino_sol) return 'diaria';
         
-        const start = new Date(solicitud.Fecha_inicio_sol).setHours(0,0,0,0);
-        const end = new Date(solicitud.Fecha_termino_sol).setHours(0,0,0,0);
+        const start = parseLocalDate(solicitud.Fecha_inicio_sol).setHours(0,0,0,0);
+        const end = parseLocalDate(solicitud.Fecha_termino_sol).setHours(0,0,0,0);
         
         // Si las fechas son diferentes (diferente día), es largo plazo
         if (start !== end) {
@@ -241,7 +249,7 @@ const GestionSolicitudes = () => {
     const formatFecha = (fecha) => {
         if (!fecha) return '-';
         try {
-            const date = new Date(fecha);
+            const date = parseLocalDate(fecha);
             return date.toLocaleString('es-CL', { 
                 year: 'numeric', 
                 month: '2-digit', 
@@ -265,7 +273,7 @@ const GestionSolicitudes = () => {
         const formatFechaDisplay = (fecha) => {
             if (!fecha) return '';
             try {
-                const date = new Date(fecha);
+                const date = parseLocalDate(fecha);
                 return date.toLocaleDateString('es-CL', { 
                     weekday: 'long',
                     year: 'numeric', 
@@ -770,8 +778,8 @@ const GestionSolicitudes = () => {
                                             <td>
                                                 {solicitud.Fecha_inicio_sol && solicitud.Fecha_termino_sol ? (
                                                     <div style={{fontSize: '12px'}}>
-                                                        <div>📅 {new Date(solicitud.Fecha_inicio_sol).toLocaleDateString('es-CL')}</div>
-                                                        <div>📅 {new Date(solicitud.Fecha_termino_sol).toLocaleDateString('es-CL')}</div>
+                                                        <div>📅 {parseLocalDate(solicitud.Fecha_inicio_sol).toLocaleDateString('es-CL')}</div>
+                                                        <div>📅 {parseLocalDate(solicitud.Fecha_termino_sol).toLocaleDateString('es-CL')}</div>
                                                     </div>
                                                 ) : '-'}
                                             </td>
