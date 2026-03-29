@@ -120,7 +120,7 @@ const GenerarSolicitud = () => {
         }
 
         setIsSubmitting(true);
-        showLoadingAlert('Enviando Solicitud...', 'Por favor espera un momento mientras procesamos tu pedido.');
+        showLoadingAlert('Enviando Solicitud...', 'Por favor espere un momento mientras procesamos su solicitud.');
 
         try {
             // Obtener hora actual en formato HH:MM:SS

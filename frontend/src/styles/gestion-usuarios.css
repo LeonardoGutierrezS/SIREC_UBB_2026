@@ -3,6 +3,7 @@
 /* Tabs */
 .tabs-container {
     display: flex;
+    flex-wrap: wrap;
     gap: 10px;
     margin-bottom: 30px;
     border-bottom: 2px solid #e0e0e0;
@@ -218,6 +219,24 @@
     outline: none;
     border-color: #006edf;
     box-shadow: 0 0 0 3px rgba(0, 110, 223, 0.1);
+}
+
+.btn-clear-filters {
+    padding: 10px 20px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    height: 40px;
+}
+
+.btn-clear-filters:hover {
+    background-color: #d32f2f;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(244, 67, 54, 0.3);
 }
 
 /* Tabla de usuarios */

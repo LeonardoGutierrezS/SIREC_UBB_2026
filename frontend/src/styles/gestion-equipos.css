@@ -141,8 +141,12 @@
 .equipos-table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 10px;
+    margin-top: 20px;
+    font-size: 0.85em;
+    table-layout: fixed;
+    font-family: Arial, sans-serif;
 }
+
 
 .equipos-table thead {
     background-color: #003366;
@@ -150,9 +154,10 @@
 }
 
 .equipos-table th {
-    padding: 15px;
+    padding: 12px 10px;
     text-align: left;
     font-weight: 600;
+    font-size: 1em;
 }
 
 .equipos-table th.text-center,
@@ -161,9 +166,24 @@
 }
 
 .equipos-table td {
-    padding: 12px 15px;
+    padding: 10px;
     border-bottom: 1px solid #e0e0e0;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    vertical-align: middle;
+    font-size: 1em;
 }
+
+/* Anchos específicos de columnas (Total 100%) */
+.equipos-table th:nth-child(1), .equipos-table td:nth-child(1) { width: 11%; } /* Num Inv */
+.equipos-table th:nth-child(2), .equipos-table td:nth-child(2) { width: 15%; } /* Serie */
+.equipos-table th:nth-child(3), .equipos-table td:nth-child(3) { width: 12%; } /* Categoria */
+.equipos-table th:nth-child(4), .equipos-table td:nth-child(4) { width: 10%; } /* Marca */
+.equipos-table th:nth-child(5), .equipos-table td:nth-child(5) { width: 15%; } /* Modelo */
+.equipos-table th:nth-child(6), .equipos-table td:nth-child(6) { width: 12%; } /* Estado */
+.equipos-table th:nth-child(7), .equipos-table td:nth-child(7) { width: 10%; } /* Disponible */
+.equipos-table th:nth-child(8), .equipos-table td:nth-child(8) { width: 15%; } /* Acciones */
+
 
 .equipos-table tbody tr:hover {
     background-color: #f5f5f5;
@@ -206,12 +226,14 @@
 /* Botones de acción */
 .actions-buttons {
     display: flex;
-    gap: 8px;
+    gap: 6px;
     justify-content: center;
+    flex-wrap: wrap;
 }
 
 .btn-edit,
-.btn-delete {
+.btn-delete,
+.btn-details {
     padding: 6px 12px;
     border: none;
     border-radius: 5px;
@@ -219,6 +241,15 @@
     cursor: pointer;
     transition: all 0.3s ease;
     background: none;
+}
+
+.btn-details {
+    color: #607d8b;
+}
+
+.btn-details:hover {
+    background-color: #e0f2f1;
+    transform: translateY(-2px);
 }
 
 .btn-edit {
@@ -447,21 +478,7 @@
   color: #1a1a1a;
 }
 
-.btn-details {
-  padding: 6px 12px;
-  border: none;
-  border-radius: 5px;
-  font-size: 1.1em;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  background: none;
-  color: #2196f3;
-}
 
-.btn-details:hover {
-  background-color: #e3f2fd;
-  transform: translateY(-2px);
-}
 
 .catalog-name-icon {
   font-size: 1.3rem;
@@ -489,12 +506,14 @@
         width: 100%;
     }
 
-    .filters-row {
+    .filters-container {
         flex-direction: column;
+        align-items: stretch;
     }
 
-    .filter-select {
+    .filter-input, .filter-select {
         width: 100%;
+        box-sizing: border-box;
     }
 
     .equipos-table-container {

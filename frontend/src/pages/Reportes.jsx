@@ -288,7 +288,7 @@ const Reportes = () => {
   };
 
   const renderFiltrosFechas = () => (
-    <div className="filters-section" style={{ display: 'flex', flexWrap: 'wrap', gap: '15px' }}>
+    <div className="reportes-filters-section" style={{ display: 'flex', flexWrap: 'wrap', gap: '15px' }}>
       <div className="filter-group">
         <label className="filter-label"><FontAwesomeIcon icon={faCalendar} /> Fecha de Inicio:</label>
         <DatePicker
@@ -572,7 +572,7 @@ const Reportes = () => {
               <p>Listado de usuarios registrados en la plataforma.</p>
             </div>
 
-            <div className="filters-section">
+            <div className="reportes-filters-section">
               <div className="filter-group">
                 <label className="filter-label">Tipo de Usuario:</label>
                 <select 

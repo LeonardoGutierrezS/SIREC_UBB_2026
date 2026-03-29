@@ -46,6 +46,7 @@
 /* Tabs */
 .tabs-container {
     display: flex;
+    flex-wrap: wrap;
     gap: 10px;
     margin-bottom: 30px;
     border-bottom: 2px solid #e0e0e0;
@@ -85,16 +86,27 @@
 }
 
 /* Tabla de solicitudes */
-.solicitudes-table-container {
+/* Solicitudes Section (Contenedor Principal como en Usuarios) */
+.solicitudes-section {
     background: white;
+    padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
+}
+
+.solicitudes-table-container {
+    background: transparent;
+    box-shadow: none;
+    overflow-x: auto;
 }
 
 .solicitudes-table {
     width: 100%;
     border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 0.85em;
+    table-layout: fixed;
+    font-family: Arial, sans-serif;
 }
 
 .solicitudes-table thead {
@@ -103,14 +115,19 @@
 }
 
 .solicitudes-table th {
-    padding: 15px;
+    padding: 12px 10px;
     text-align: left;
     font-weight: 600;
+    font-size: 1em;
 }
 
 .solicitudes-table td {
-    padding: 12px 15px;
+    padding: 10px;
     border-bottom: 1px solid #e0e0e0;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    vertical-align: middle;
+    font-size: 1em;
 }
 
 .solicitudes-table tbody tr:hover {
@@ -365,9 +382,10 @@
         padding: 3px 10px;
     }
 
-    .tipo-filter-select {
+    .tipo-filter-select, .filter-select, .search-container input {
         width: 100%;
         margin-top: 10px;
+        box-sizing: border-box;
     }
 }
 
@@ -416,7 +434,7 @@
 }
 
 /* Filtros de fecha */
-.filters-section {
+.reportes-filters-section {
     display: flex;
     gap: 20px;
     align-items: flex-end;
@@ -573,7 +591,7 @@
         padding: 20px;
     }
 
-    .filters-section {
+    .reportes-filters-section {
         flex-direction: column;
         align-items: stretch;
     }

@@ -1,142 +1,83 @@
 "use strict";
 import { AppDataSource } from "../config/configDb.js";
 import Solicitud from "../entity/solicitud.entity.js";
+import User from "../entity/user.entity.js";
 import Autorizacion from "../entity/autorizacion.entity.js";
 import Prestamo from "../entity/prestamo.entity.js";
 import TieneEstado from "../entity/tiene_estado.entity.js";
 import Equipos from "../entity/equipos.entity.js";
 import EstadoSchema from "../entity/estado.entity.js";
-import { enviarEmailSolicitudRechazadaAutomatico, enviarEmailAvisoAtraso } from "./email.service.js";
+import { enviarEmailAvisoAtraso, enviarEmailRecordatorioDirectores } from "./email.service.js";
 import { IsNull, LessThan } from "typeorm";
 
 /**
- * Proceso para rechazar automáticamente solicitudes de largo plazo que no han sido
- * procesadas en un plazo de 48 horas.
+ * Proceso para agrupar y notificar a los Directores sobre solicitudes de Largo Plazo 
+ * que lleven más de 24 horas pendientes de revisión (estado Null en Préstamo).
  */
-export async function rejectExpiredSolicitudes() {
+export async function notifyPendingDirectors() {
   const queryRunner = AppDataSource.createQueryRunner();
   await queryRunner.connect();
-  await queryRunner.startTransaction();
 
   try {
     const solicitudRepository = queryRunner.manager.getRepository(Solicitud);
-    const prestamoRepository = queryRunner.manager.getRepository(Prestamo);
-    const autorizacionRepository = queryRunner.manager.getRepository(Autorizacion);
-    const tieneEstadoRepository = queryRunner.manager.getRepository(TieneEstado);
-    const equipoRepository = queryRunner.manager.getRepository(Equipos);
+    const userRepository = queryRunner.manager.getRepository(User);
 
     const now = new Date();
-    const fortyEightHoursAgo = new Date(now.getTime() - (48 * 60 * 60 * 1000));
+    const twentyFourHoursAgo = new Date(now.getTime() - (24 * 60 * 60 * 1000));
 
-    console.log(`[CHRONOS] Iniciando revisión. Ahora: ${now.toLocaleString()}. Límite expiración: ${fortyEightHoursAgo.toLocaleString()}`);
+    console.log(`[CHRONOS] Iniciando revisión de recordatorios a Directores. Límite: ${twentyFourHoursAgo.toLocaleString()}`);
 
-    // Filtro explícito usando IsNull() para garantizar que solo se traigan las no procesadas
-    const pendingSolicitudes = await solicitudRepository.find({
-      where: {
-        ID_Prestamo: IsNull()
-      },
-      relations: ["usuario", "equipo", "equipo.marca", "equipo.categoria", "equipo.especificaciones", "usuario.tipoUsuario"]
-    });
+    // Filtrar solicitudes de Largo Plazo (Fecha_inicio_sol y Fecha_termino no Nulas)
+    // Que sigan pendientes (ID_Prestamo Null) y tengan más de 24h desde Fecha_Sol
+    const pendingSolicitudes = await solicitudRepository.createQueryBuilder("solicitud")
+        .leftJoinAndSelect("solicitud.usuario", "usuario")
+        .leftJoinAndSelect("usuario.tipoUsuario", "tipoUsuario")
+        .where("solicitud.ID_Prestamo IS NULL")
+        .andWhere("solicitud.Fecha_inicio_sol IS NOT NULL")
+        .andWhere("solicitud.Fecha_termino_sol IS NOT NULL")
+        .andWhere("solicitud.Fecha_Sol < :timeLimit", { timeLimit: twentyFourHoursAgo })
+        .getMany();
 
     if (pendingSolicitudes.length === 0) {
-      console.log("[CHRONOS] No hay solicitudes pendientes para revisar.");
-      await queryRunner.rollbackTransaction();
+      console.log("[CHRONOS] No hay solicitudes pendientes > 24hrs para notificar a Directores.");
       return;
     }
 
-    // Filtrar manualmente para logging preciso
-    const expiredList = pendingSolicitudes.filter(s => {
-      const isLargoPlazo = s.Fecha_inicio_sol && s.Fecha_termino_sol;
-      if (!isLargoPlazo) return false;
+    let countIECI = 0;
+    let countICI = 0;
 
-      const fechaSol = new Date(s.Fecha_Sol);
-      const isExpired = fechaSol < fortyEightHoursAgo;
-      
-      if (isExpired) {
-        console.log(`[CHRONOS] DETECTADA EXPIRADA: ID=${s.ID_Solicitud}, FechaSol=${fechaSol.toLocaleString()}, Usuario=${s.usuario?.Nombre_Completo}`);
-      }
-      return isExpired;
+    pendingSolicitudes.forEach(s => {
+       const tipo = s.usuario?.tipoUsuario?.Descripcion;
+       const carrera = s.usuario?.ID_Carrera;
+       // Validar quién debe revisarlo
+       if (tipo === "Profesor") {
+           countIECI++; // Profesores suman para ambos directores
+           countICI++;
+       } else if (tipo === "Alumno") {
+           if (carrera === 1) countIECI++;
+           if (carrera === 2) countICI++;
+       }
     });
 
-    if (expiredList.length === 0) {
-      console.log("[CHRONOS] No se encontraron solicitudes que cumplan el criterio de expiración (Largo Plazo + 48hrs).");
-      await queryRunner.rollbackTransaction();
-      return;
-    }
-
-    console.log(`[CHRONOS] Procesando ${expiredList.length} solicitudes expiradas...`);
-
-    for (const solicitud of expiredList) {
-      // Doble verificación: cargar la solicitud desde la DB dentro de la transacción para estar 100% seguros
-      const currentSol = await solicitudRepository.findOne({
-        where: { ID_Solicitud: solicitud.ID_Solicitud, ID_Prestamo: IsNull() }
-      });
-      
-      if (!currentSol) {
-        console.log(`[CHRONOS] Solicitud ID=${solicitud.ID_Solicitud} ya no está pendiente, saltando.`);
-        continue;
-      }
-
-      // 1. Crear Préstamo
-      const newPrestamo = prestamoRepository.create({
-        ID_Num_Inv: solicitud.ID_Num_Inv,
-        Fecha_inicio_prestamo: new Date(),
-        Hora_inicio_prestamo: new Date().toLocaleTimeString('es-CL', { hour12: false }),
-      });
-      const prestamoSaved = await prestamoRepository.save(newPrestamo);
-
-      // 2. Autorización de rechazo automático
-      const newAutorizacion = autorizacionRepository.create({
-        Rut: "21308770-3", // Admin Sistema
-        ID_Prestamo: prestamoSaved.ID_Prestamo,
-        Fecha_Aut: new Date(),
-        Hora_Aut: new Date().toLocaleTimeString('es-CL', { hour12: false }),
-        Obs_Aut: "Rechazo automático del sistema: Expiración de plazo de 48 horas.",
-      });
-      await autorizacionRepository.save(newAutorizacion);
-
-      // 3. Estado Rechazado
-      const newEstado = tieneEstadoRepository.create({
-        ID_Prestamo: prestamoSaved.ID_Prestamo,
-        Cod_Estado: 5,
-        Fecha_Estado: new Date(),
-        Hora_Estado: new Date().toLocaleTimeString('es-CL', { hour12: false }),
-        Obs_Estado: "Solicitud rechazada automáticamente por el sistema tras 48 horas.",
-      });
-      await tieneEstadoRepository.save(newEstado);
-
-      // 4. Vincular Solicitud (Uso la entidad prestamo directamente para asegurar persistencia)
-      solicitud.prestamo = prestamoSaved;
-      await solicitudRepository.save(solicitud);
-
-      // 5. Liberar Equipo y actualizar estado a Disponible
-      const estadoRepository = queryRunner.manager.getRepository(EstadoSchema);
-      const estadoDisponible = await estadoRepository.findOne({ where: { Descripcion: "Disponible" } });
-
-      await equipoRepository.update(
-        { ID_Num_Inv: solicitud.ID_Num_Inv },
-        { 
-          Disponible: true,
-          estado: estadoDisponible
+    // Enviar correos si hay solicitudes pendientes para informar
+    if (countIECI > 0) {
+        const directoresIECI = await userRepository.find({ where: { ID_Cargo: 1, Vigente: true }});
+        for (const dir of directoresIECI) {
+            await enviarEmailRecordatorioDirectores(dir, countIECI);
         }
-      );
-
-      console.log(`[CHRONOS] Solicitud ID=${solicitud.ID_Solicitud} marcada como RECHAZADA exitosamente.`);
-      
-      // 6. Notificar por correo
-      try {
-        await enviarEmailSolicitudRechazadaAutomatico(solicitud);
-      } catch (emailErr) {
-        console.error(`[CHRONOS] Error al enviar email para ID=${solicitud.ID_Solicitud}:`, emailErr);
-      }
     }
 
-    await queryRunner.commitTransaction();
-    console.log(`[CHRONOS] Task finalizada correctamente.`);
+    if (countICI > 0) {
+        const directoresICI = await userRepository.find({ where: { ID_Cargo: 2, Vigente: true }});
+        for (const dir of directoresICI) {
+            await enviarEmailRecordatorioDirectores(dir, countICI);
+        }
+    }
+
+    console.log(`[CHRONOS] Recordatorios enviados con éxito: ${countIECI} solicitudes pendientes para IECI, ${countICI} para ICI.`);
 
   } catch (error) {
-    console.error("[CHRONOS] CRITICAL ERROR:", error);
-    await queryRunner.rollbackTransaction();
+    console.error("[CHRONOS] CRITICAL ERROR en notifyPendingDirectors:", error);
   } finally {
     await queryRunner.release();
   }
@@ -228,9 +169,10 @@ export async function checkPrestamosVencidos() {
 export function startCronJobs() {
     console.log("[CHRONOS] Iniciando servicio de tareas programadas...");
     
-    // 1. Rechazo automático de solicitudes expiradas (cada 1 hora)
-    setTimeout(() => rejectExpiredSolicitudes(), 30000); 
-    setInterval(() => rejectExpiredSolicitudes(), 3600000);
+    // 1. Notificación de solicitudes de largo plazo pendientes a Directores (cada 24 horas)
+    // Se ejecuta pasados unos segundos para no chocar con el boot, luego diariamente.
+    setTimeout(() => notifyPendingDirectors(), 45000); 
+    setInterval(() => notifyPendingDirectors(), 86400000);
     
     // 2. Notificación de préstamos vencidos (cada 24 horas)
     // Se ejecuta al minuto para verificar al inicio, luego diariamente

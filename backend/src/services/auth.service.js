@@ -37,9 +37,18 @@ export async function loginService(user) {
 
     // Obtener cargo activo (sin fecha fin)
     const cargoActivo = userFound.poseesCargos?.find(pc => !pc.Fecha_Fin);
+    const idCargoActual = cargoActivo?.cargo?.ID_Cargo;
     // esDirectorEscuela si el ID_Cargo es 1 (IECI) o 2 (ICI)
-    const esDirectorEscuela = cargoActivo?.cargo?.ID_Cargo === 1 || cargoActivo?.cargo?.ID_Cargo === 2;
+    const esDirectorEscuela = idCargoActual === 1 || idCargoActual === 2;
     const descripcionCargo = cargoActivo?.Descripcion_Cargo || cargoActivo?.cargo?.Desc_Cargo || null;
+
+    // Asignar ID_Carrera para el payload. Si es Director, su ID_Cargo define su Carrera (1: IECI, 2: ICI)
+    let idCarreraPayload = userFound.ID_Carrera;
+    let nombreCarreraPayload = userFound.carrera?.Nombre_Carrera || "";
+    if (!idCarreraPayload && esDirectorEscuela) {
+      idCarreraPayload = idCargoActual;
+      nombreCarreraPayload = idCargoActual === 1 ? "Ingeniería de Ejecución en Computación e Informática" : "Ingeniería Civil Informática";
+    }
 
     const payload = {
       rut: userFound.Rut,
@@ -48,8 +57,8 @@ export async function loginService(user) {
       tipoUsuario: userFound.tipoUsuario?.Descripcion || "Alumno",
       cargo: descripcionCargo,
       esDirectorEscuela: esDirectorEscuela,
-      carrera: userFound.carrera?.Nombre_Carrera || "", // Corregido para usar Nombre_Carrera
-      idCarrera: userFound.ID_Carrera, // Incluir ID_Carrera para filtrado
+      carrera: nombreCarreraPayload, 
+      idCarrera: idCarreraPayload, // Corregido para inyectar la carrera del director
       vigente: userFound.Vigente,
     };
 

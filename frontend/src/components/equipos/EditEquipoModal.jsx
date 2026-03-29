@@ -3,10 +3,12 @@ import { useState, useEffect } from 'react';
 import '@styles/modal.css';
 import { showErrorAlert, showSuccessAlert } from '@helpers/sweetAlert.js';
 import { updateEquipo } from '@services/equipo.service.js';
-import { getMarcas, getCategorias, getEstados } from '@services/catalogo.service.js';
+import { createMarca, getMarcas, getCategorias, getEstados } from '@services/catalogo.service.js';
+import { Controller } from 'react-hook-form';
+import CreatableSelect from 'react-select/creatable';
 
 const EditEquipoModal = ({ show, onClose, onSuccess, equipo }) => {
-    const { register, handleSubmit, formState: { errors }, reset, watch, setValue } = useForm();
+    const { register, handleSubmit, formState: { errors }, reset, watch, control, setValue } = useForm();
     const [marcas, setMarcas] = useState([]);
     const [categorias, setCategorias] = useState([]);
     const [estados, setEstados] = useState([]);
@@ -30,7 +32,6 @@ const EditEquipoModal = ({ show, onClose, onSuccess, equipo }) => {
             setValue('Modelo', equipo.Modelo);
             setValue('Numero_Serie', equipo.Numero_Serie);
             setValue('Comentarios', equipo.Comentarios || '');
-            setValue('Disponible', equipo.Disponible.toString());
             setValue('ID_Marca', equipo.ID_Marca || equipo.marca?.ID_Marca);
             setValue('ID_Categoria', equipo.ID_Categoria || equipo.categoria?.ID_Categoria);
             setValue('ID_Estado', equipo.ID_Estado || equipo.estado?.Cod_Estado);
@@ -82,13 +83,36 @@ const EditEquipoModal = ({ show, onClose, onSuccess, equipo }) => {
         }
     };
 
+    const handleCreateMarca = async (inputValue) => {
+        try {
+            setLoading(true);
+            const response = await createMarca({ Descripcion: inputValue });
+            if (response.status === 'Success') {
+                const newMarca = response.data;
+                setMarcas(prev => [...prev, newMarca]);
+                setValue('ID_Marca', newMarca.ID_Marca, { shouldValidate: true });
+                showSuccessAlert('Marca Creada', `La marca "${inputValue}" fue creada y seleccionada.`);
+            } else {
+                showErrorAlert('Error', response.message || 'No se pudo crear la marca');
+            }
+        } catch (error) {
+            console.error('Error al crear marca dinámicamente:', error);
+            showErrorAlert('Error', 'Error de red al intentar crear la marca');
+        } finally {
+            setLoading(false);
+        }
+    };
+
     const onSubmit = async (data) => {
         try {
+            const selectedEstado = estados.find(e => e.Cod_Estado === parseInt(data.ID_Estado));
+            const isDisponible = selectedEstado ? selectedEstado.Descripcion === 'Disponible' : false;
+
             const equipoData = {
                 Modelo: data.Modelo,
                 Numero_Serie: data.Numero_Serie,
                 Comentarios: data.Comentarios || null,
-                Disponible: data.Disponible === 'true',
+                Disponible: isDisponible,
                 ID_Marca: parseInt(data.ID_Marca),
                 ID_Categoria: parseInt(data.ID_Categoria),
                 ID_Estado: parseInt(data.ID_Estado)
@@ -183,12 +207,29 @@ const EditEquipoModal = ({ show, onClose, onSuccess, equipo }) => {
                         <div className="form-row">
                             <div className="form-group">
                                 <label htmlFor="ID_Marca">🏢 Marca *</label>
-                                <select id="ID_Marca" disabled={isOnLoan} {...register('ID_Marca', { required: isOnLoan ? false : 'La marca es obligatoria' })}>
-                                    <option value="">Seleccione marca</option>
-                                    {marcas.map((marca) => (
-                                        <option key={marca.ID_Marca} value={marca.ID_Marca}>{marca.Descripcion}</option>
-                                    ))}
-                                </select>
+                                <Controller
+                                    name="ID_Marca"
+                                    control={control}
+                                    rules={{ required: isOnLoan ? false : 'La marca es obligatoria' }}
+                                    render={({ field }) => {
+                                        const marcaOptions = marcas.map(m => ({ value: m.ID_Marca, label: m.Descripcion }));
+                                        return (
+                                            <CreatableSelect
+                                                isClearable
+                                                isDisabled={loading || isOnLoan}
+                                                isLoading={loading}
+                                                onChange={(newValue) => field.onChange(newValue ? newValue.value : '')}
+                                                onCreateOption={handleCreateMarca}
+                                                options={marcaOptions}
+                                                value={marcaOptions.find(c => c.value === field.value) || null}
+                                                placeholder="Seleccione o escriba..."
+                                                formatCreateLabel={(inputValue) => `Crear marca "${inputValue}"`}
+                                                className="react-select-container"
+                                                classNamePrefix="react-select"
+                                            />
+                                        );
+                                    }}
+                                />
                                 {errors.ID_Marca && <span className="error-message">{errors.ID_Marca.message}</span>}
                             </div>
 
@@ -205,7 +246,7 @@ const EditEquipoModal = ({ show, onClose, onSuccess, equipo }) => {
                         </div>
 
                         <div className="form-row">
-                            <div className="form-group">
+                            <div className="form-group" style={{ width: '100%' }}>
                                 <label htmlFor="ID_Estado">🛠️ Estado actual *</label>
                                 <select id="ID_Estado" {...register('ID_Estado', { required: 'El estado es obligatorio' })}>
                                     <option value="">Seleccione estado</option>
@@ -214,14 +255,6 @@ const EditEquipoModal = ({ show, onClose, onSuccess, equipo }) => {
                                     ))}
                                 </select>
                                 {errors.ID_Estado && <span className="error-message">{errors.ID_Estado.message}</span>}
-                            </div>
-
-                            <div className="form-group">
-                                <label htmlFor="Disponible">✅ Disponibilidad *</label>
-                                <select id="Disponible" {...register('Disponible')}>
-                                    <option value="true">SÍ (Disponible para préstamo)</option>
-                                    <option value="false">NO (No disponible)</option>
-                                </select>
                             </div>
                         </div>
 

@@ -1,7 +1,4 @@
-.perfil-container {
-    padding: 40px;
-    max-width: 100%;
-}
+/* Contenedor principal del perfil cubierto por .main-container */
 
 .perfil-header {
     margin-bottom: 24px;
@@ -335,8 +332,8 @@
         grid-template-columns: 1fr;
     }
     
-    .perfil-container {
-        padding: 20px;
+    .perfil-grid {
+        grid-template-columns: 1fr;
     }
 
     .info-subgrid {

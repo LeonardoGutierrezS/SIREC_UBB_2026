@@ -7,11 +7,8 @@ export async function createMarcaService(body) {
   try {
     const marcaRepository = AppDataSource.getRepository(Marca);
 
-    // Normalizar el nombre (trim y capitalizar primera letra de cada palabra)
-    const marcaNormalizada = body.Descripcion.trim()
-      .split(" ")
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-      .join(" ");
+    // Normalizar el nombre (solo trim para evitar espacios vacíos, se respeta el formato del usuario)
+    const marcaNormalizada = body.Descripcion.trim().replace(/\s+/g, " ");
 
     // Verificar si existe (case-insensitive)
     const marcas = await marcaRepository.find();
@@ -76,16 +73,13 @@ export async function updateMarcaService(id, body) {
 
     if (!marcaFound) return [null, "Marca no encontrada"];
 
-    // Normalizar el nombre
-    const marcaNormalizada = body.Descripcion.trim()
-      .split(" ")
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-      .join(" ");
+    // Normalizar el nombre (solo trim, respetar formato)
+    const marcaNormalizada = body.Descripcion.trim().replace(/\s+/g, " ");
 
-    // Verificar si existe otra marca con el mismo nombre (case-insensitive)
+    // Verificar si existe otra marca con el mismo nombre (case-insensitive) y distinto ID
     const marcas = await marcaRepository.find();
     const existingMarca = marcas.find(
-      m => m.Descripcion.toLowerCase() === marcaNormalizada.toLowerCase() && m.ID_Marca !== id
+      m => m.Descripcion.toLowerCase() === marcaNormalizada.toLowerCase() && m.ID_Marca !== parseInt(id)
     );
 
     if (existingMarca) {

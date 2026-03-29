@@ -5,6 +5,8 @@ import { getMisPrestamos } from '@services/prestamo.service';
 import { getActivasPorUsuario } from '@services/penalizacion.service.js';
 import { showErrorAlert, showSuccessAlert } from '@helpers/sweetAlert.js';
 import '@styles/perfil.css';
+import HideIcon from '../assets/HideIcon.svg';
+import ViewIcon from '../assets/ViewIcon.svg';
 
 const Perfil = () => {
     const user = JSON.parse(localStorage.getItem('usuario')) || {};
@@ -14,6 +16,15 @@ const Perfil = () => {
         newPassword: '',
         confirmPassword: ''
     });
+    const [showPasswords, setShowPasswords] = useState({
+        current: false,
+        new: false,
+        confirm: false
+    });
+
+    const togglePasswordVisibility = (field) => {
+        setShowPasswords(prev => ({ ...prev, [field]: !prev[field] }));
+    };
     const [solicitudes, setSolicitudes] = useState([]);
     const [sanciones, setSanciones] = useState([]);
     const [loadingSolicitudes, setLoadingSolicitudes] = useState(true);
@@ -89,7 +100,8 @@ const Perfil = () => {
                 showSuccessAlert('¡Éxito!', 'Tu contraseña ha sido actualizada correctamente.');
                 setPasswords({ currentPassword: '', newPassword: '', confirmPassword: '' });
             } else {
-                showErrorAlert('Error', response.details?.message || response.message || 'Error al actualizar contraseña');
+                const errorMessage = typeof response.details === 'string' ? response.details : (response.message || 'Error al actualizar contraseña');
+                showErrorAlert('Error', errorMessage);
             }
         } catch (error) {
             console.error('Error:', error);
@@ -194,25 +206,47 @@ const Perfil = () => {
                         <form onSubmit={handleSubmitPassword} className="password-form">
                             <div className="form-group">
                                 <label>Contraseña Actual</label>
-                                <input
-                                    type="password"
-                                    name="currentPassword"
-                                    value={passwords.currentPassword}
-                                    onChange={handlePasswordChange}
-                                    required
-                                    placeholder="••••••••"
-                                />
+                                <div className="password-field" style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+                                    <input
+                                        type={showPasswords.current ? 'text' : 'password'}
+                                        name="currentPassword"
+                                        value={passwords.currentPassword}
+                                        onChange={handlePasswordChange}
+                                        required
+                                        placeholder="••••••••"
+                                        style={{ width: '100%', paddingRight: '40px' }}
+                                    />
+                                    <button 
+                                        type="button"
+                                        onClick={() => togglePasswordVisibility('current')}
+                                        tabIndex="-1"
+                                        style={{ position: 'absolute', right: '10px', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+                                    >
+                                        <img src={showPasswords.current ? ViewIcon : HideIcon} alt="Ver contraseña" style={{ width: '20px', height: '20px', opacity: 0.6 }} />
+                                    </button>
+                                </div>
                             </div>
                             <div className="form-group">
                                 <label>Nueva Contraseña</label>
-                                <input
-                                    type="password"
-                                    name="newPassword"
-                                    value={passwords.newPassword}
-                                    onChange={handlePasswordChange}
-                                    required
-                                    placeholder="Min. 8 caracteres"
-                                />
+                                <div className="password-field" style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+                                    <input
+                                        type={showPasswords.new ? 'text' : 'password'}
+                                        name="newPassword"
+                                        value={passwords.newPassword}
+                                        onChange={handlePasswordChange}
+                                        required
+                                        placeholder="Min. 8 caracteres"
+                                        style={{ width: '100%', paddingRight: '40px' }}
+                                    />
+                                    <button 
+                                        type="button"
+                                        onClick={() => togglePasswordVisibility('new')}
+                                        tabIndex="-1"
+                                        style={{ position: 'absolute', right: '10px', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+                                    >
+                                        <img src={showPasswords.new ? ViewIcon : HideIcon} alt="Ver contraseña" style={{ width: '20px', height: '20px', opacity: 0.6 }} />
+                                    </button>
+                                </div>
                                 <div className="password-requirements">
                                     <strong>Requisitos:</strong>
                                     <div className="requirements-list">
@@ -236,14 +270,25 @@ const Perfil = () => {
                             </div>
                             <div className="form-group">
                                 <label>Confirmar Nueva Contraseña</label>
-                                <input
-                                    type="password"
-                                    name="confirmPassword"
-                                    value={passwords.confirmPassword}
-                                    onChange={handlePasswordChange}
-                                    required
-                                    placeholder="Repite la nueva contraseña"
-                                />
+                                <div className="password-field" style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+                                    <input
+                                        type={showPasswords.confirm ? 'text' : 'password'}
+                                        name="confirmPassword"
+                                        value={passwords.confirmPassword}
+                                        onChange={handlePasswordChange}
+                                        required
+                                        placeholder="Repite la nueva contraseña"
+                                        style={{ width: '100%', paddingRight: '40px' }}
+                                    />
+                                    <button 
+                                        type="button"
+                                        onClick={() => togglePasswordVisibility('confirm')}
+                                        tabIndex="-1"
+                                        style={{ position: 'absolute', right: '10px', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+                                    >
+                                        <img src={showPasswords.confirm ? ViewIcon : HideIcon} alt="Ver contraseña" style={{ width: '20px', height: '20px', opacity: 0.6 }} />
+                                    </button>
+                                </div>
                             </div>
                             <button type="submit" className="btn-update" disabled={loading}>
                                 {loading ? 'Actualizando...' : 'Actualizar Contraseña'}

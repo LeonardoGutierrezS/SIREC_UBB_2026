@@ -251,8 +251,8 @@ export async function deleteUserService(query) {
 
     if (!userFound) return [null, "Usuario no encontrado"];
 
-    if (userFound.tipoUsuario && userFound.tipoUsuario.Descripcion === "Administrador") {
-      return [null, "No se puede eliminar un usuario con tipo Administrador"];
+    if (userFound.Rut === "21308770-3" || userFound.Correo === "administrador@gmail.cl") {
+      return [null, "No se puede eliminar al administrador principal del sistema"];
     }
 
     const userDeleted = await userRepository.remove(userFound);
@@ -328,8 +328,8 @@ export async function rejectUserService(rut, motivo) {
 
     if (userFound.Vigente) return [null, "No se puede rechazar un usuario ya aprobado"];
 
-    if (userFound.tipoUsuario && userFound.tipoUsuario.Descripcion === "Administrador") {
-      return [null, "No se puede rechazar un usuario con tipo Administrador"];
+    if (userFound.Rut === "21308770-3" || userFound.Correo === "administrador@gmail.cl") {
+      return [null, "No se puede rechazar al administrador principal del sistema"];
     }
 
     const userDeleted = await userRepository.remove(userFound);
@@ -354,8 +354,8 @@ export async function updateUserStatusService(rut, vigente) {
 
     if (!userFound) return [null, "Usuario no encontrado"];
 
-    if (userFound.tipoUsuario && userFound.tipoUsuario.Descripcion === "Administrador") {
-      return [null, "No se puede cambiar el estado de un administrador"];
+    if (userFound.Rut === "21308770-3" || userFound.Correo === "administrador@gmail.cl") {
+      return [null, "No se puede cambiar el estado del administrador principal del sistema"];
     }
 
     await userRepository.update(

@@ -68,16 +68,9 @@ export const userBodyValidation = Joi.object({
       "string.max": "El correo electrónico debe tener como máximo 50 caracteres.",
     }),
   password: Joi.string()
-    .min(8)
-    .max(26)
-    .pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/)
     .messages({
-      "string.empty": "La contraseña no puede estar vacía.",
-      "string.base": "La contraseña debe ser de tipo string.",
-      "string.min": "La contraseña debe tener como mínimo 8 caracteres.",
-      "string.max": "La contraseña debe tener como máximo 26 caracteres.",
-      "string.pattern.base":
-        "La contraseña debe tener al menos una mayúscula, una minúscula y un número.",
+      "string.empty": "La contraseña actual no puede estar vacía.",
+      "string.base": "La contraseña actual debe ser de tipo string."
     }),
   newPassword: Joi.string()
     .min(8)

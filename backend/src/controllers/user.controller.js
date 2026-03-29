@@ -113,7 +113,7 @@ export async function updateUser(req, res) {
       }
 
       // Impedir que un usuario no-admin cambie campos sensibles
-      const forbiddenFields = ["codTipoUsuario", "vigente", "aprobado", "rut"];
+      const forbiddenFields = ["codTipoUsuario", "vigente", "aprobado", "idCargo", "idCarrera", "rol"];
       for (const field of forbiddenFields) {
         if (body[field] !== undefined) {
           return handleErrorClient(
@@ -122,6 +122,21 @@ export async function updateUser(req, res) {
             "Acción no permitida",
             `No tienes permisos para modificar el campo: ${field}`,
           );
+        }
+      }
+    } else {
+      // SI es administrador, y se está editando a sí mismo, bloquear campos sensibles para evitar auto-sabotaje
+      if (rut === currentUser.rut || email === currentUser.email) {
+        const forbiddenFieldsForSelfAdmin = ["codTipoUsuario", "vigente", "aprobado", "idCargo", "idCarrera", "rol"];
+        for (const field of forbiddenFieldsForSelfAdmin) {
+          if (body[field] !== undefined) {
+            return handleErrorClient(
+              res,
+              403,
+              "Acción no permitida",
+              `No puedes modificar tus propios privilegios o estado (campo: ${field})`
+            );
+          }
         }
       }
     }
@@ -141,6 +156,11 @@ export async function updateUser(req, res) {
 export async function deleteUser(req, res) {
   try {
     const { rut, email } = req.query;
+    const currentUser = req.user;
+
+    if (rut === currentUser.rut || email === currentUser.email) {
+      return handleErrorClient(res, 403, "Acción no permitida", "No puedes eliminar tu propia cuenta de administrador.");
+    }
 
     const { error: queryError } = userQueryValidation.validate({
       rut,
@@ -235,6 +255,12 @@ export async function updateUserStatus(req, res) {
   try {
     const { rut } = req.params;
     const { vigente } = req.body;
+    const currentUser = req.user;
+
+    if (rut === currentUser.rut) {
+      return handleErrorClient(res, 403, "Acción no permitida", "No puedes cambiar el estado de tu propia cuenta.");
+    }
+
     const [user, error] = await updateUserStatusService(rut, vigente);
 
     if (error) return handleErrorClient(res, 400, "Error al actualizar estado", error);

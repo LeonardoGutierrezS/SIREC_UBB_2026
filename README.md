@@ -6,16 +6,41 @@
 
 ## 🛠️ Tecnologías y Propósito
 
-El sistema utiliza un stack moderno para asegurar rendimiento, escalabilidad y una experiencia de usuario fluida:
+El sistema SIREC UBB utiliza un ecosistema moderno compuesto por diversas herramientas seleccionadas para garantizar escalabilidad, seguridad y una experiencia de usuario rápida y eficiente. A continuación, el Stack Tecnológico completo del proyecto:
 
-| Tecnología                | Propósito                                                                                                               |
-| :------------------------ | :---------------------------------------------------------------------------------------------------------------------- |
-| **Node.js & Express**     | Motor del Backend, encargado de la lógica de negocio, API REST y gestión de procesos.                                   |
-| **React (Vite)**          | Biblioteca de Frontend para crear una interfaz de usuario dinámica, receptiva y de alto rendimiento.                    |
-| **PostgreSQL**            | Base de datos relacional para el almacenamiento seguro y persistente de la información de usuarios, equipos y reservas. |
-| **PM2**                   | Gestor de procesos utilizado para mantener el sistema activo 24/7, permitiendo reinicios automáticos y monitoreo.       |
-| **JWT (JSON Web Tokens)** | Estándar para la autenticación segura de usuarios y control de acceso basado en roles.                                  |
-| **Material UI (MUI)**     | Sistema de diseño profesional para componentes visuales consistentes y estéticos.                                       |
+### 🗄️ 1. Base de Datos y Almacenamiento
+* **PostgreSQL**: Motor de base de datos relacional primario y robusto.
+* **pg (node-postgres)**: Controlador nativo para la conexión de Node.js a PostgreSQL.
+
+### ⚙️ 2. Desarrollo Backend (Lógica y API REST)
+* **Node.js**: Entorno de ejecución JavaScript del lado del servidor.
+* **Express.js**: Framework web minimalista para la creación de la API RESTful.
+* **TypeORM**: Mapeador Objeto-Relacional (ORM) para modelado robusto de base de datos.
+* **JWT & Passport**: Estandarización de autenticación stateless y protección de rutas.
+* **Bcrypt.js**: Encriptación de contraseñas de usuarios mediante hashing seguro.
+* **Nodemailer**: Transporte de correos electrónicos automáticos (vía Gmail SMTP).
+* **PDFKit**: Generador dinámico de documentos y actas de préstamo.
+* **Multer**: Middleware para carga y parseo eficiente de archivos de imagen y datos.
+* **Joi**: Validador estricto de esquemas en peticiones HTTP entrantes.
+* **Morgan**: Logger fundamental de tráfico HTTP para auditoría.
+
+### 🎨 3. Desarrollo Frontend (Interfaz de Usuario)
+* **React.js**: Librería líder para construir la interfaz reactiva del usuario basada en componentes.
+* **Vite**: Empaquetador modular de ultra-alta velocidad y servidor de desarrollo.
+* **CSS Puro (Vanilla)**: Hoja de estilos estricta para máximo control visual, eludiendo dependencias externas.
+* **React Router DOM**: Enrutador clave de navegación para experiencia Single Page Application.
+* **Axios**: Cliente HTTP para consumos e intercepciones a la API del Backend.
+* **React Hook Form**: Gestión ágil de estados y validaciones complejas de entrada.
+* **SweetAlert2**: Sistema elegante de alertas, confirmaciones modales y notificaciones.
+* **Chart.js & react-chartjs-2**: Generación dinámica del Panel estadístico de Reportes.
+* **React Select**: Componentes avanzados de auto-completado y etiquetas para selectores masivos.
+* **React Tabulator**: Presentación de mega-tablas con rendimiento nativo ultra alto.
+
+### 💻 4. Entorno de Desarrollo y Despliegue
+* **Visual Studio Code**: Editor de código fuente ligero, rápido y versátil.
+* **Antigravity (IA Editor)**: Co-piloto algorítmico y entorno con IA usado integralmente a lo largo del ciclo de refactorización y depuración del sistema.
+* **Git & GitHub**: Control de versiones seguro y gestión de hitos del código.
+* **PM2 & Nodemon**: Managers de procesos orientados a producción (permanencia) y desarrollo (auto-recarga).
 
 ---
 

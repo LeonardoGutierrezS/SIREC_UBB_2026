@@ -261,6 +261,42 @@ export async function enviarEmailDirectorNuevaSolicitud(director, solicitud) {
 }
 
 /**
+ * Enviar correo de recordatorio a los Directores sobre solicitudes pendientes (> 24 horas)
+ */
+export async function enviarEmailRecordatorioDirectores(director, countPendientes) {
+  try {
+    const attachments = await getCommonAttachments();
+    
+    const html = getUnifiedEmailTemplate({
+      title: "Recordatorio: Solicitudes Pendientes",
+      greeting: `${director.Nombre_Completo}`,
+      intro: `Le recordamos que tiene **${countPendientes} solicitud(es) de préstamo de Largo Plazo** que llevan más de 24 horas pendientes de su revisión.`,
+      details: `
+        <div style="background-color: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; border-radius: 4px; color: #856404;">
+            <strong>ℹ️ Aviso:</strong> Por favor, acceda al sistema a la brevedad para aprobar o rechazar estas solicitudes, permitiendo que los usuarios puedan retirar los equipos o buscar alternativas.
+        </div>
+      `,
+      actions: `
+        <a href="${FRONTEND_URL || "http://localhost:5173"}/" class="button">Acceder al Sistema</a>
+      `,
+      color: "#ffc107" // Amarillo advertencia
+    });
+
+    await sendEmailWrapper({
+      from: `"SIREC UBB" <${emailConfig.user}>`,
+      to: director.Correo,
+      subject: "⏱️ Recordatorio: Solicitudes Pendientes de Revisión - SIREC UBB",
+      html: html,
+      attachments: attachments
+    });
+
+    console.log(`✉️ Recordatorio de ${countPendientes} solicitudes enviado al director: ${director.Correo}`);
+  } catch (error) {
+    console.error("Error al enviar email de recordatorio al director:", error);
+  }
+}
+
+/**
  * Enviar correo a los Administradores sobre una nueva solicitud diaria
  */
 export async function enviarEmailNotificacionAdminSolicitudDiaria(admin, solicitud) {

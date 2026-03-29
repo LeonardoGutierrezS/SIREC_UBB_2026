@@ -695,7 +695,7 @@ const GestionSolicitudes = () => {
     // Renderizar contenido de la pestaña activa
     const renderTabContent = () => {
         return (
-            <>
+            <div className="solicitudes-section">
                 <div className="section-header-with-button">
                     <h2>
                         {activeTab === 'pendientes' && '⏳ Solicitudes Pendientes'}
@@ -734,21 +734,21 @@ const GestionSolicitudes = () => {
                     <table className="solicitudes-table">
                         <thead>
                             <tr>
-                                <th>ID</th>
-                                <th>Tipo</th>
-                                <th>Usuario</th>
-                                <th>Equipo</th>
-                                <th>Categoría</th>
-                                <th>Fecha Solicitud</th>
-                                {(tipoFiltro === 'largo_plazo' || esDirectorEscuela) && <th>Período Solicitado</th>}
-                                {activeTab !== 'historial' && <th>Motivo</th>}
-                                {activeTab === 'listo-entregar' && <th>Documentación</th>}
-                                {activeTab === 'rechazados' && <th>Motivo Rechazo</th>}
-                                {activeTab === 'entregados' && <th>Documentación</th>}
-                                {activeTab === 'devueltos' && <th>Fecha Devolución</th>}
-                                {activeTab === 'historial' && <th>Estado</th>} {/* Nueva columna para historial */}
-                                {activeTab !== 'historial' && <th style={{width: '120px'}}>Acciones</th>}
-                                {activeTab === 'historial' && <th style={{width: '80px'}}>Ver</th>}
+                                <th style={{width: '5%'}}>ID</th>
+                                <th style={{width: '10%'}}>Tipo</th>
+                                <th style={{width: '15%'}}>Usuario</th>
+                                <th style={{width: '10%'}}>Equipo</th>
+                                <th style={{width: '10%'}}>Categoría</th>
+                                <th style={{width: '10%'}}>Fecha Solicitud</th>
+                                {(tipoFiltro === 'largo_plazo' || esDirectorEscuela) && <th style={{width: '12%'}}>Período Solicitado</th>}
+                                {activeTab !== 'historial' && <th style={{width: '15%'}}>Motivo</th>}
+                                {activeTab === 'listo-entregar' && <th style={{width: '15%'}}>Documentación</th>}
+                                {activeTab === 'rechazados' && <th style={{width: '15%'}}>Motivo Rechazo</th>}
+                                {activeTab === 'entregados' && <th style={{width: '15%'}}>Documentación</th>}
+                                {activeTab === 'devueltos' && <th style={{width: '10%'}}>Fecha Devolución</th>}
+                                {activeTab === 'historial' && <th style={{width: '10%'}}>Estado</th>}
+                                {activeTab !== 'historial' && <th style={{width: '15%'}}>Acciones</th>}
+                                {activeTab === 'historial' && <th style={{width: '8%'}}>Ver</th>}
                             </tr>
                         </thead>
                         <tbody>
@@ -987,7 +987,7 @@ const GestionSolicitudes = () => {
                         </tbody>
                     </table>
                 </div>
-            </>
+            </div>
         );
     };
 

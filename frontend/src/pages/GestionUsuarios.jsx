@@ -127,12 +127,12 @@ const PendingUsersSection = () => {
     );
 };
 
-// Sección de todos los usuarios
 const AllUsersSection = () => {
     const { users, loading, filters, setFilters, handleDeactivate, fetchAllUsers } = useAllUsers();
     const [showCreateModal, setShowCreateModal] = useState(false);
     const [showEditModal, setShowEditModal] = useState(false);
     const [selectedUser, setSelectedUser] = useState(null);
+    const currentUser = JSON.parse(localStorage.getItem('usuario')) || {};
 
     const handleEditClick = (user) => {
         setSelectedUser(user);
@@ -189,6 +189,15 @@ const AllUsersSection = () => {
                     <option value="true">Activos</option>
                     <option value="false">Inactivos</option>
                 </select>
+                
+                {(filters.search || filters.tipoUsuario || filters.vigente) && (
+                    <button 
+                        className="btn-clear-filters"
+                        onClick={() => setFilters({ search: '', tipoUsuario: '', vigente: '' })}
+                    >
+                        Limpiar Filtros
+                    </button>
+                )}
             </div>
 
             {users.length === 0 ? (
@@ -228,6 +237,8 @@ const AllUsersSection = () => {
                                 }
                             }
                             
+                            const isCurrentUser = user.Rut === currentUser.rut;
+
                             return (
                                 <tr key={user.Rut || user.ID_Usuario}>
                                     <td>{user.Nombre_Completo}</td>
@@ -245,12 +256,18 @@ const AllUsersSection = () => {
                                             <button 
                                                 className="btn-edit"
                                                 onClick={() => handleEditClick(user)}
+                                                disabled={isCurrentUser}
+                                                style={isCurrentUser ? { opacity: 0.5, cursor: 'not-allowed' } : {}}
+                                                title={isCurrentUser ? "No puedes editar tu propia cuenta desde aquí. Usa Mi Perfil." : ""}
                                             >
                                                 ✏️ Editar
                                             </button>
                                             <button 
                                                 className={user.Vigente ? 'btn-deactivate' : 'btn-approve'}
                                                 onClick={() => handleDeactivate(user.Rut, user.Vigente)}
+                                                disabled={isCurrentUser}
+                                                style={isCurrentUser ? { opacity: 0.5, cursor: 'not-allowed' } : {}}
+                                                title={isCurrentUser ? "No puedes desactivar tu propia cuenta." : ""}
                                             >
                                                 {user.Vigente ? '⊗ Desactivar' : '✓ Activar'}
                                             </button>
