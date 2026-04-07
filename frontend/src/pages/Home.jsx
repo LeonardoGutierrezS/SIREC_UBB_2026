@@ -51,7 +51,7 @@ const Home = () => {
                     <h3>Periodo de Marcha Blanca</h3>
                     <p>
                         <FontAwesomeIcon icon={faCalendarAlt} style={{ marginRight: '6px' }} />
-                        Del <strong>2 de marzo</strong> al <strong>3 de abril de 2026</strong>
+                        Del <strong>6 de abril</strong> al <strong>6 de mayo de 2026</strong>
                     </p>
                     <p className="home-banner-sub">
                         Durante este periodo el sistema se encuentra en fase de pruebas. 

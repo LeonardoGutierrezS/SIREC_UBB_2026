@@ -14,31 +14,36 @@
   "author": "Leonardo Gutierrez Sanchez",
   "license": "ISC",
   "dependencies": {
-    "bcryptjs": "^2.4.3",
-    "cookie-parser": "^1.0.0",
-    "cors": "^2.8.5",
+    "bcryptjs": "^3.0.3",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.6",
     "csv-parser": "^3.2.0",
-    "express": "^4.22.1",
-    "express-session": "^1.18.2",
-    "joi": "^17.13.3",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0",
+    "joi": "^18.1.2",
     "json2csv": "^6.0.0-alpha.2",
-    "jsonwebtoken": "^9.0.2",
+    "jsonwebtoken": "^9.0.3",
     "multer": "^2.0.2",
-    "nodemailer": "^7.0.12",
+    "nodemailer": "^8.0.5",
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
-    "pdfkit": "^0.17.2",
-    "pg": "^8.12.0",
+    "pdfkit": "^0.18.0",
+    "pg": "^8.20.0",
     "reflect-metadata": "^0.2.2",
     "typeorm": "^0.3.28"
   },
   "devDependencies": {
-    "eslint": "^9.9.1",
+    "eslint": "^9.39.4",
     "eslint-config-google": "^0.14.0",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.5",
     "morgan": "^1.10.1",
-    "nodemon": "^3.1.4",
-    "prettier": "^3.3.3"
+    "nodemon": "^3.1.14",
+    "prettier": "^3.8.1"
+  },
+  "overrides": {
+    "flatted": "^3.4.2",
+    "brace-expansion": "^1.1.13",
+    "picomatch": "^2.3.2"
   }
 }
